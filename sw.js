@@ -1,7 +1,7 @@
 const SCOPE = new URL(self.registration.scope);
 const CACHE_PREFIX = `clean-url-${encodeURIComponent(SCOPE.pathname)}-`;
-const CACHE_NAME = `${CACHE_PREFIX}web-v1`;
-const SHELL = ["./", "./index.html", "./web.css", "./web.js", "./url-cleaner.js", "./manifest.webmanifest",
+const CACHE_NAME = `${CACHE_PREFIX}web-v2`;
+const SHELL = ["./", "./index.html", "./privacy.html", "./web.css", "./web.js", "./url-cleaner.js", "./manifest.webmanifest",
   "./icons/icon-32.png", "./icons/icon-128.png", "./icons/apple-touch-icon.png", "./icons/pwa-192.png", "./icons/pwa-512.png"];
 const ASSETS = new Set(SHELL.map(path => new URL(path, SCOPE).href));
 
