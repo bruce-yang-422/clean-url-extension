@@ -11,9 +11,13 @@ let cleanedUrl = null;
 let feedbackTimer;
 
 function showUrl(element, value) {
-  element.textContent = value;
+  element.textContent = element === original && value.length > 90
+    ? `${value.slice(0, 45)}…${value.slice(-32)}`
+    : value;
   element.title = value;
+  element.setAttribute("aria-label", value);
   element.tabIndex = 0;
+  element.scrollTop = 0;
 }
 
 button.addEventListener("click", async () => {
@@ -44,6 +48,7 @@ button.addEventListener("click", async () => {
 
 async function initialize() {
   try {
+    document.getElementById("extension-version").textContent = `v${chrome.runtime.getManifest().version}`;
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab?.url) throw new Error("Unavailable tab");
     const result = cleanUrl(tab.url);
@@ -55,8 +60,9 @@ async function initialize() {
       status.querySelector(".status-icon").textContent = "i";
       statusText.textContent = "簽章連結保留原樣，避免連結失效";
     } else {
-      status.hidden = result.removedCount > 0;
-      statusText.textContent = result.removedCount ? "" : "網址已經很乾淨";
+      const changed = result.cleanedUrl !== result.originalUrl;
+      status.hidden = changed;
+      statusText.textContent = changed ? "" : "網址已經很乾淨";
     }
     button.disabled = false;
   } catch {

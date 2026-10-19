@@ -2,19 +2,20 @@
 // Uses only Node built-ins; opens an isolated profile and a local fixture page.
 import { spawn } from "node:child_process";
 import { createServer } from "node:http";
-import { readFile, writeFile, mkdir, mkdtemp, rm } from "node:fs/promises";
+import { readFile, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve, dirname, basename } from "node:path";
 import assert from "node:assert/strict";
 
 const root = resolve(import.meta.dirname, "..");
+const extensionRoot = process.env.EXTENSION_PATH ? resolve(process.env.EXTENSION_PATH) : root;
 const browserPath = process.env.BROWSER_PATH;
 if (!browserPath) throw new Error("Set BROWSER_PATH to a Chromium executable.");
 const profile = await mkdtemp(join(tmpdir(), "clean-url-test-"));
 const server = createServer((req, res) => { res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); res.end("<!doctype html><title>Clean URL local fixture</title><p>Local test page</p>"); });
 await new Promise(done => server.listen(0, "127.0.0.1", done));
 const base = `http://127.0.0.1:${server.address().port}`;
-const browser = spawn(browserPath, ["--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check", "--disable-background-networking", "--remote-debugging-port=0", `--user-data-dir=${profile}`, `--disable-extensions-except=${root}`, `--load-extension=${root}`, "about:blank"], { windowsHide: true, stdio: ["ignore", "ignore", "pipe"] });
+const browser = spawn(browserPath, ["--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check", "--disable-background-networking", "--remote-debugging-port=0", `--user-data-dir=${profile}`, `--disable-extensions-except=${extensionRoot}`, `--load-extension=${extensionRoot}`, "about:blank"], { windowsHide: true, stdio: ["ignore", "ignore", "pipe"] });
 browser.on("error", error => console.error(error));
 const connections = [];
 let stderr = "";
@@ -34,9 +35,10 @@ async function connect(url) {
   connections.push(ws);
   let id = 0;
   const pending = new Map();
+  let eventHandler = () => {};
   ws.onmessage = ({ data }) => {
     const msg = JSON.parse(data);
-    if (!msg.id) return;
+    if (!msg.id) { eventHandler(msg); return; }
     const call = pending.get(msg.id);
     if (!call) return;
     pending.delete(msg.id);
@@ -44,11 +46,13 @@ async function connect(url) {
     if (msg.error) call.reject(new Error(JSON.stringify(msg.error)));
     else call.resolve(msg.result);
   };
-  return (method, params = {}) => new Promise((resolve, reject) => {
+  const send = (method, params = {}) => new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error(`CDP timed out: ${method}`)), 10000);
     pending.set(++id, { resolve, reject, timer });
     ws.send(JSON.stringify({ id, method, params }));
   });
+  send.onEvent = handler => { eventHandler = handler; };
+  return send;
 }
 try {
   const port = await waitFor(async () => {
@@ -68,7 +72,7 @@ try {
   console.log("Renderer check:", await evaluate("1 + 1"));
   // Verify shipped assets without overwriting the user's icon artwork.
   for (const size of [16, 32, 48, 128]) {
-    const png = await readFile(join(root, `icons/icon-${size}.png`));
+    const png = await readFile(join(extensionRoot, `icons/icon-${size}.png`));
     const dimensions = await evaluate(`(async () => { const img = new Image(); img.src = ${JSON.stringify(`data:image/png;base64,${png.toString("base64")}`)}; await img.decode(); return [img.naturalWidth, img.naturalHeight]; })()`);
     assert.deepEqual(dimensions, [size, size]);
   }
@@ -108,6 +112,8 @@ try {
   assert.equal(state.status, "");
   assert.equal(await inspect("document.querySelector('#clean-status').hidden"), true);
   assert.equal(state.width, 360);
+  const installedVersion = JSON.parse(await readFile(join(extensionRoot, "manifest.json"), "utf8")).version;
+  assert.equal(await inspect("document.querySelector('#extension-version').textContent"), `v${installedVersion}`);
   await browserCdp("Target.activateTarget", { targetId });
   await inspect("document.querySelector('#copy-button').click()");
   await waitFor(() => inspect("document.querySelector('#copy-feedback').textContent !== ''"));
@@ -115,7 +121,6 @@ try {
   // Inspect actual clipboard content with an explicit testing-only CDP grant.
   await browserCdp("Browser.grantPermissions", { origin: `chrome-extension://${extension.id}`, permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"] });
   assert.equal(await inspect("navigator.clipboard.readText()"), state.cleaned);
-  await mkdir(join(root, "artifacts"), { recursive: true });
   // Force a clipboard failure to verify the error message and retry path.
   await inspect("Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('test denial'); } } }); document.querySelector('#copy-button').click()");
   await waitFor(() => inspect("document.querySelector('#copy-feedback').classList.contains('error')"));
@@ -134,20 +139,38 @@ try {
     await waitFor(() => inspect(`document.querySelector('#status-text')?.textContent === ${JSON.stringify(status)}`));
     assert.equal(await inspect("document.querySelector('#copy-button').disabled"), disabled);
   }
-  // Native popup surfaces cannot be resized by CDP. Render the same extension
-  // document in a background tab for a complete, correctly sized screenshot.
-  await cdp("Page.navigate", { url: `${base}/product/123?utm_source=shopee&utm_medium=social&id=42#details` });
-  await waitFor(() => evaluate("document.readyState === 'complete' && location.hostname === '127.0.0.1'"));
-  await browserCdp("Extensions.triggerAction", { id: extension.id, targetId: tabTarget.targetId });
-  const shot = await browserCdp("Target.createTarget", { url: `chrome-extension://${extension.id}/popup.html`, background: true });
-  const shotTarget = await waitFor(async () => (await targets()).find(t => t.id === shot.targetId));
-  const shotCdp = await connect(shotTarget.webSocketDebuggerUrl);
-  await shotCdp("Emulation.setDeviceMetricsOverride", { width: 360, height: 600, deviceScaleFactor: 2, mobile: false });
-  await waitFor(async () => (await shotCdp("Runtime.evaluate", { expression: "document.querySelector('#copy-button')?.disabled === false", returnByValue: true })).result.value);
-  const height = (await shotCdp("Runtime.evaluate", { expression: "document.body.offsetHeight", returnByValue: true })).result.value;
-  const { data } = await shotCdp("Page.captureScreenshot", { format: "png", clip: { x: 0, y: 0, width: 360, height, scale: 1 }, captureBeyondViewport: true });
-  await writeFile(join(root, "artifacts/popup.png"), Buffer.from(data, "base64"));
-  console.log("PASS: real extension load, URL preview, no removal statistics, 360px layout, clipboard content, clipboard error/retry, clean URL, signed URL, restricted page.");
+  // All site URLs below are synthetic fixtures, intercepted locally.
+  cdp.onEvent(message => {
+    if (message.method === "Fetch.requestPaused") {
+      cdp("Fetch.fulfillRequest", { requestId: message.params.requestId, responseCode: 200,
+        responseHeaders: [{ name: "Content-Type", value: "text/html; charset=utf-8" }],
+        body: Buffer.from("<!doctype html><title>Synthetic fixture</title>").toString("base64")
+      }).catch(error => console.error(error.message));
+    }
+  });
+  await cdp("Fetch.enable", { patterns: [{ urlPattern: "*", requestStage: "Request" }] });
+  const matrix = JSON.parse(await readFile(join(root, "tests/fixtures/site-matrix.json"), "utf8"));
+  const previewTab = await browserCdp("Target.createTarget", { url: `chrome-extension://${extension.id}/popup.html`, background: true });
+  const previewTarget = await waitFor(async () => (await targets()).find(t => t.id === previewTab.targetId));
+  const preview = await connect(previewTarget.webSocketDebuggerUrl);
+  async function inspectPreview(expression) {
+    const result = await preview("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true });
+    if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
+    return result.result.value;
+  }
+  for (const [, url, expected] of matrix) {
+    await browserCdp("Target.activateTarget", { targetId: first.id });
+    await cdp("Page.navigate", { url });
+    await waitFor(() => evaluate(`document.readyState === 'complete' && location.href === ${JSON.stringify(url)}`));
+    await browserCdp("Extensions.triggerAction", { id: extension.id, targetId: tabTarget.targetId });
+    await preview("Page.reload");
+    await waitFor(() => inspectPreview(`document.querySelector('#clean-url')?.textContent === ${JSON.stringify(expected)} && document.querySelector('#clean-status').hidden === ${url !== expected}`));
+    await browserCdp("Target.activateTarget", { targetId: previewTab.targetId });
+    await inspectPreview("document.querySelector('#copy-button').click()");
+    await waitFor(() => inspectPreview("document.querySelector('#copy-feedback').textContent === '已複製乾淨連結'"));
+    assert.equal(await inspectPreview("navigator.clipboard.readText()"), expected);
+  }
+  console.log(`PASS: installed v${installedVersion}, popup/clipboard/error states and ${matrix.length} synthetic site fixtures.`);
 } finally {
   for (const ws of connections) ws.close();
   browser.kill();

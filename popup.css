@@ -7,6 +7,8 @@ main { padding: 18px 16px 16px; }
 .brand-icon { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; border: 1px solid #d2ede6; border-radius: 10px; background: #e6f6f2; color: #1d9a82; }
 svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 h1 { margin: 0; font-size: 15px; line-height: 1.25; letter-spacing: -.3px; }
+.brand-title { display: flex; align-items: baseline; gap: 6px; }
+.version { color: #75837c; font-size: 10px; white-space: nowrap; }
 .brand-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 4px 9px; border: 1px solid #d2ede6; border-radius: 99px; background: #e6f6f2; color: #237a67; font-size: 11px; }
 .brand-badge > span { width: 6px; height: 6px; border-radius: 50%; background: #2ec4a5; }
 .card { margin-bottom: 14px; }

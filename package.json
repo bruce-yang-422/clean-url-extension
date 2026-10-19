@@ -1,7 +1,11 @@
 {
   "name": "clean-url-extension",
-  "version": "0.1.0",
+  "version": "0.1.12",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test", "check": "node --check popup.js && node --check url-cleaner.js" }
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check popup.js && node --check url-cleaner.js && node --check scripts/package.mjs && node --check scripts/browser-check.mjs",
+    "package": "npm run check && npm test && node scripts/package.mjs"
+  }
 }

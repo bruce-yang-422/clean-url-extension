@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Clean URL｜乾淨連結",
-  "version": "0.1.0",
+  "version": "0.1.12",
   "description": "一鍵移除已知網址追蹤參數，在本機複製乾淨連結。",
   "permissions": ["activeTab", "clipboardWrite"],
   "action": {

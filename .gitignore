@@ -1,4 +1,6 @@
 node_modules/
 .browser-test-profile/
 artifacts/
+Release/
+unpacked/
 *.zip
