@@ -2,6 +2,8 @@
 
 一鍵移除已知網址追蹤參數，預覽並複製乾淨連結。適用於支援 Manifest V3 的 Chrome／Edge；使用原生 HTML、CSS、JavaScript，無須編譯或安裝套件。
 
+**[網頁版／PWA：cleanlink.stack-base.com](https://cleanlink.stack-base.com/)**。貼上網址即可使用；可安裝到裝置，第一次連線完成離線準備後，就能離線清理。網頁版與擴充功能共用同一份清理規則。
+
 從 [**Releases**](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載擴充功能 ZIP，解壓縮後依下方步驟安裝。
 
 ## 安裝與使用
@@ -44,6 +46,31 @@
 
 ## 開發與驗證
 
+### 網頁版與 GitHub Pages
+
+根目錄 `index.html` 為網頁入口，`manifest.webmanifest` 為 PWA 設定，`sw.js` 只快取應用程式靜態資源，不快取輸入的連結。所有資源使用相對路徑，支援自訂網域根目錄與 GitHub Pages 專案子路徑。
+
+```powershell
+npm run build:web
+```
+
+輸出 `web-dist/`，只包含網站所需的靜態檔案。可用一般靜態 HTTP 伺服器預覽；離線與安裝功能需要 HTTPS 或 localhost，不支援直接雙擊 HTML 的 `file://` 模式。
+
+`.github/workflows/pages.yml` 在推送 `main` 或手動執行時檢查、測試、建置並部署網站。儲存庫 Pages 的發布來源使用 GitHub Actions，自訂網域為 `cleanlink.stack-base.com`，DNS CNAME 指向 `bruce-yang-422.github.io`，並啟用 HTTPS。相關設定見 [GitHub Pages 官方文件](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site)。
+
+PWA 使用獨立的 `manifest.webmanifest`，不影響擴充功能的 `manifest.json`。網站建置不包含擴充功能彈窗、測試、腳本或 ICO 原稿。
+
+瀏覽器驗證需先建置網站，然後指定 Chromium：
+
+```powershell
+$env:BROWSER_PATH = 'C:\path\to\chromium\chrome.exe'
+npm run test:web
+```
+
+測試涵蓋貼上／預覽／複製、無效輸入、安裝提示、手機寬度、輸入資料不持久化及停止伺服器後的完整離線重新載入。預設測試 Pages 子路徑；設定 `$env:WEB_BASE_PATH = '/'` 可驗證自訂網域的根路徑。
+
+### 擴充功能
+
 需要 Node.js 22 或更新版本，無第三方 JavaScript 相依套件：
 
 ```powershell
@@ -77,4 +104,4 @@ node scripts/browser-check.mjs
 
 ## 檔案
 
-`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為介面與操作；`url-cleaner.js` 為純清理函式；`icons/` 為圖示。
+`index.html`、`web.css`、`web.js` 為網頁版；`manifest.webmanifest`、`sw.js` 為 PWA 設定與離線功能；`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為擴充功能彈窗；`url-cleaner.js` 為兩個版本共用的純清理函式；`icons/` 為圖示。
