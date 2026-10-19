@@ -51,4 +51,4 @@ node scripts/browser-check.mjs
 
 ## 檔案
 
-`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為介面與操作；`url-cleaner.js` 為純清理函式；`icons/` 為圖示。原始規劃與設計參考保留在專案根目錄。
+`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為介面與操作；`url-cleaner.js` 為純清理函式；`icons/` 為圖示。`Clean-Url-Ux-Prototype.html` 保留作為介面設計參考。
