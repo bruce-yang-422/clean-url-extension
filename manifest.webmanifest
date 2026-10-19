@@ -7,6 +7,12 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "share_target": {
+    "action": "./share-target",
+    "method": "POST",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": { "title": "title", "text": "text", "url": "url" }
+  },
   "background_color": "#fffef7",
   "theme_color": "#fffef7",
   "icons": [

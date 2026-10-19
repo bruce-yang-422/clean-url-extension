@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check popup.js && node --check url-cleaner.js && node --check web.js && node --check sw.js && node --check scripts/build-web.mjs && node --check scripts/package.mjs && node --check scripts/browser-check.mjs && node --check scripts/web-check.mjs",
+    "check": "node --check popup.js && node --check url-cleaner.js && node --check web.js && node --check share-target.js && node --check sw.js && node --check scripts/build-web.mjs && node --check scripts/package.mjs && node --check scripts/browser-check.mjs && node --check scripts/web-check.mjs",
     "build:web": "node scripts/build-web.mjs",
     "test:web": "node scripts/web-check.mjs",
     "package": "npm run check && npm test && node scripts/package.mjs"
