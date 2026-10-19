@@ -56,7 +56,7 @@ npm run build:web
 
 輸出 `web-dist/`，只包含網站所需的靜態檔案。可用一般靜態 HTTP 伺服器預覽；離線與安裝功能需要 HTTPS 或 localhost，不支援直接雙擊 HTML 的 `file://` 模式。
 
-`.github/workflows/pages.yml` 在推送 `main` 或手動執行時檢查、測試、建置並部署網站。儲存庫 Pages 的發布來源使用 GitHub Actions，自訂網域為 `cleanlink.stack-base.com`，DNS CNAME 指向 `bruce-yang-422.github.io`，並啟用 HTTPS。相關設定見 [GitHub Pages 官方文件](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site)。
+GitHub Pages 從 `main` 分支的根目錄發布，入口為 `index.html`，`.nojekyll` 讓檔案直接作為靜態網站提供。儲存庫 Settings → Pages 的 Source 使用「Deploy from a branch」，Branch 選 `main`、`/(root)`。自訂網域為 `cleanlink.stack-base.com`，DNS CNAME 指向 `bruce-yang-422.github.io`，並啟用 HTTPS。相關設定見 [GitHub Pages 官方文件](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site)。
 
 PWA 使用獨立的 `manifest.webmanifest`，不影響擴充功能的 `manifest.json`。網站建置不包含擴充功能彈窗、測試、腳本或 ICO 原稿。
 
