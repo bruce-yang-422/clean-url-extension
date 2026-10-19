@@ -2,6 +2,8 @@
 
 一鍵移除已知網址追蹤參數，預覽並複製乾淨連結。適用於支援 Manifest V3 的 Chrome／Edge；使用原生 HTML、CSS、JavaScript，無須編譯或安裝套件。
 
+從 [**Releases**](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載擴充功能 ZIP，解壓縮後依下方步驟安裝。
+
 ## 安裝與使用
 
 1. Chrome 開啟 `chrome://extensions`；Edge 開啟 `edge://extensions`。
@@ -45,7 +47,7 @@ node scripts/browser-check.mjs
 
 此測試使用隔離的暫存設定檔與本機 HTTP 測試頁，透過實際擴充功能按鈕取得 `activeTab` 權限，驗證預覽、複製結果、複製失敗及重試、乾淨網址、簽章與受限頁面。測試會驗證 PNG 圖示尺寸、寫入測試連結至系統剪貼簿，並產生 `artifacts/popup.png`。剪貼簿讀取權限只由測試工具暫時授予，不在產品權限中。
 
-圖示原稿為 `icons/clean-url.ico`，擴充功能與彈窗使用其中匯出的 PNG。若更新 ICO，可安裝 Python Pillow 後執行 `python scripts/generate-icons.py`，重新匯出 16、32、48、128 px 圖示；一般安裝及執行擴充功能不需要 Python。
+圖示原稿為 `icons/clean-url.ico`，擴充功能與彈窗使用其中匯出的 16、32、48、128 px PNG，已隨專案提供。
 
 目前驗證結果與發布前人工檢查項目見 [VALIDATION.md](VALIDATION.md)。
 
