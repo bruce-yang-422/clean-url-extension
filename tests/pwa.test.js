@@ -32,6 +32,8 @@ test("PWA manifest 使用相對路徑以支援 Pages 子目錄", () => {
   assert.equal(new URL(manifest.scope, base).pathname, "/clean-url-extension/");
   assert.equal(new URL(manifest.id, base).pathname, "/clean-url-extension/");
   assert.equal(manifest.display, "standalone");
+  assert.equal(manifest.share_target.method, "POST");
+  assert.equal(new URL(manifest.share_target.action, base).pathname, "/clean-url-extension/share-target");
   for (const icon of manifest.icons) {
     const data = readFileSync(new URL(`../${icon.src}`, import.meta.url));
     const [width, height] = icon.sizes.split("x").map(Number);
@@ -70,4 +72,23 @@ test("完全離線時可讀取已快取的清理核心", async () => {
   const response = await new Promise(resolve => handlers.get("fetch")({ request: new Request("https://example.test/clean-url-extension/url-cleaner.js"), respondWith: resolve }));
   assert.equal(response.status, 200);
   assert.equal(await response.text(), "app-shell");
+});
+
+test("離線分享 POST 只回傳未快取的本機介面，不發送或快取分享內容", async () => {
+  const { handlers, entries } = worker({ offline: true });
+  const shellUrl = "https://example.test/clean-url-extension/index.html";
+  entries.set(shellUrl, new Response("<!doctype html><html><head></head><body></body></html>"));
+  const url = "https://example.com/article?utm_source=share";
+  const response = await new Promise(resolve => handlers.get("fetch")({
+    request: new Request("https://example.test/clean-url-extension/share-target", {
+      method: "POST", body: new URLSearchParams({ text: `文章 ${url}` }),
+    }), respondWith: resolve,
+  }));
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("Cache-Control"), "no-store");
+  const html = await response.text();
+  const payload = html.match(/name="clean-url-share" content="([^"]*)"/)[1];
+  assert.deepEqual(JSON.parse(decodeURIComponent(payload)), { text: `文章 ${url}` });
+  assert.equal(entries.size, 1);
+  assert.ok(!(await entries.get(shellUrl).text()).includes("clean-url-share"));
 });

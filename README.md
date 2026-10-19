@@ -107,3 +107,9 @@ node scripts/browser-check.mjs
 `index.html`、`web.css`、`web.js` 為網頁版；`manifest.webmanifest`、`sw.js` 為 PWA 設定與離線功能；`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為擴充功能彈窗；`url-cleaner.js` 為兩個版本共用的純清理函式；`icons/` 為圖示。
 
 隱私權政策： https://cleanlink.stack-base.com/privacy.html （擴充功能、網頁版與 PWA 共用；可填入 Chrome Web Store 開發者後台）。
+
+### 從其他 App 分享網址
+
+在支援 Web Share Target 的裝置與瀏覽器（例如 Android Chrome）安裝 PWA 後，可在其他 App 的分享選單選取 Clean URL，自動填入原始網址並產生清理結果，再按「複製乾淨連結」。分享的文字包含網址時也能辨識。iPhone／iPad 的 PWA 目前不支援此分享接收方式，可改用貼上網址。
+
+若舊版安裝尚未出現在分享選單，請先連線開啟網站更新；仍未出現時可移除後重新安裝 PWA。分享內容以 POST 交由本機 Service Worker 接收，直接由本機回傳介面並填入網址，不將分享內容放入網址列、傳送至網站伺服器或儲存於離線快取與清理歷史。

@@ -1,4 +1,5 @@
 import { cleanUrl } from "./url-cleaner.js";
+import { sharedInput } from "./share-target.js";
 
 const input = document.getElementById("url-input");
 const output = document.getElementById("url-output");
@@ -102,4 +103,12 @@ if ("serviceWorker" in navigator && window.isSecureContext) {
     .then(() => { offlineReady = true; connectionState(); })
     .catch(() => { offlineLabel.textContent = "離線準備未完成，請連線重試"; });
 }
+const shareMarker = document.querySelector('meta[name="clean-url-share"]');
+const shared = sharedInput(shareMarker ? `#share=${shareMarker.content}` : location.hash);
+if (shared !== null) {
+  history.replaceState(null, "", shareMarker ? new URL("./", import.meta.url).pathname : location.pathname + location.search);
+  shareMarker?.remove();
+  input.value = shared;
+}
 update();
+if (shared === "") message("未收到可清理的網址，請貼上完整的 HTTP 或 HTTPS 連結。", true);

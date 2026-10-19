@@ -118,8 +118,11 @@ try {
     await writeFile(path, Buffer.from(screenshot.data, "base64"));
     console.log(`Temporary desktop preview: ${path}`);
   }
-  await cdp("Emulation.setDeviceMetricsOverride", { width: 375, height: 1000, deviceScaleFactor: 1, mobile: true });
-  assert.equal(await evaluate("document.documentElement.scrollWidth <= innerWidth"), true);
+  for (const [width, height] of [[320, 568], [375, 667], [390, 700]]) {
+    await cdp("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: true });
+    assert.equal(await evaluate("document.documentElement.scrollWidth <= innerWidth"), true);
+    assert.equal(await evaluate("document.querySelector('#web-copy-button').getBoundingClientRect().bottom <= innerHeight"), true, `Copy visible at ${width}x${height}`);
+  }
   if (process.argv.includes("--preview")) {
     const screenshot = await cdp("Page.captureScreenshot", { format: "png" });
     const path = join(profile, "mobile.png");
@@ -131,6 +134,14 @@ try {
   assert.ok(cacheUrls.length >= 11);
   assert.ok(cacheUrls.every(url => url.startsWith(appUrl) && !url.includes("utm_") && !url.includes("example.com")));
   assert.ok(!requests.some(path => path.includes("article") || path.includes("utm_source")));
+  async function share(data) {
+    await evaluate(`(() => { window.__sharePending = true; const form = document.createElement('form'); form.method = 'POST'; form.action = ${JSON.stringify(appUrl + "share-target")}; for (const [name, value] of Object.entries(${JSON.stringify(data)})) { const field = document.createElement('input'); field.type = 'hidden'; field.name = name; field.value = value; form.append(field); } document.body.append(form); form.submit(); })()`);
+    await until(() => evaluate(`!window.__sharePending && document.querySelector('#url-output')?.value === ${JSON.stringify(expected)} && location.hash === ''`));
+    assert.equal(await evaluate("document.querySelector('#url-input').value"), sample);
+    assert.equal(await evaluate("location.href"), appUrl);
+    assert.ok(!requests.includes("/share-target") && !requests.includes(`${basePath}share-target`));
+  }
+  await share({ text: `分享文章 ${sample}` });
   // Take the server completely offline, so the service worker must supply
   // HTML, CSS, JS, core rules, and icons without any network fallback.
   await new Promise(done => { server.close(done); server.closeAllConnections(); });
@@ -138,10 +149,11 @@ try {
   await until(() => evaluate("document.querySelector('#url-input') && document.querySelector('#url-input').value === '' && typeof navigator.serviceWorker.controller?.scriptURL === 'string'"));
   await input(sample);
   await until(() => evaluate(`document.querySelector('#url-output').value === ${JSON.stringify(expected)}`));
+  await share({ url: sample, title: "Offline shared article" });
   await evaluate("document.querySelector('#privacy-button').click()");
   await until(() => evaluate("document.querySelector('#policy-title') !== null"));
   assert.equal(await evaluate("document.documentElement.scrollWidth <= innerWidth"), true);
-  console.log("PASS: GitHub Pages subpath, manifest, input/preview/copy/errors, mobile layout, no URL persistence, shell-only cache, and complete offline reload/cleaning.");
+  console.log("PASS: Pages paths, input/copy/errors, copy visible on small phones, online/offline share target, no URL persistence, shell-only cache, and offline privacy page.");
   if (process.argv.includes("--preview")) await new Promise(done => setTimeout(done, 30000));
 } finally {
   for (const socket of sockets) socket.close();
