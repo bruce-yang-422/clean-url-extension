@@ -3,4 +3,5 @@ node_modules/
 artifacts/
 Release/
 unpacked/
+web-dist/
 *.zip

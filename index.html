@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fffef7">
+  <meta name="description" content="貼上網址，一鍵複製乾淨連結。在你的裝置上移除追蹤參數，可安裝並離線使用。">
+  <link rel="canonical" href="https://cleanlink.stack-base.com/">
+  <meta property="og:url" content="https://cleanlink.stack-base.com/">
+  <meta property="og:title" content="Clean URL｜讓分享的連結，乾淨一點">
+  <meta property="og:description" content="貼上網址，一鍵移除追蹤參數。可安裝、可離線，網址只在你的裝置上處理。">
+  <meta property="og:type" content="website">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Clean URL">
+  <title>Clean URL｜讓分享的連結，乾淨一點</title>
+  <link rel="icon" type="image/png" href="./icons/icon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./web.css">
+  <script type="module" src="./web.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Clean URL 首頁"><img src="./icons/icon-128.png" width="40" height="40" alt=""><span>Clean URL<small>乾淨連結</small></span></a>
+    <nav aria-label="主要導覽">
+      <a class="extension-link" href="https://github.com/bruce-yang-422/clean-url-extension/releases" target="_blank" rel="noopener noreferrer">瀏覽器擴充功能 <span aria-hidden="true">↗</span></a>
+      <button id="install-button" class="button button-outline" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg>安裝到裝置</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <span class="eyebrow"><span aria-hidden="true"></span>簡單分享，少一點追蹤</span>
+      <h1 id="page-title">讓分享的連結，<span>乾淨一點。</span></h1>
+      <p>貼上網址，留下你想分享的內容。<br class="mobile-break">清理與複製，都在你的裝置上完成。</p>
+    </section>
+
+    <section class="workspace" aria-label="網址清理工具">
+      <div class="input-panel">
+        <div class="panel-heading"><label for="url-input"><span class="step" aria-hidden="true">01</span>貼上原始網址</label><button id="clear-button" class="text-button" type="button" disabled>清空</button></div>
+        <textarea id="url-input" dir="ltr" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="input-hint" placeholder="https://example.com/article?utm_source=…"></textarea>
+        <div class="input-tools"><span id="input-hint">支援 HTTP 與 HTTPS 連結</span><button id="example-button" class="text-button" type="button">試用範例 <span aria-hidden="true">↗</span></button></div>
+      </div>
+      <div class="output-panel">
+        <div class="panel-heading"><label for="url-output"><span class="step" aria-hidden="true">02</span>你的乾淨連結</label><span id="ready-label" class="ready" hidden>READY</span></div>
+        <textarea id="url-output" dir="ltr" readonly spellcheck="false" aria-label="清理後的完整網址" placeholder="乾淨的連結會出現在這裡"></textarea>
+        <button id="web-copy-button" class="button button-primary" type="button" disabled><svg id="copy-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 4H5a2 2 0 0 0-2 2v12"/></svg><span id="web-copy-label">複製乾淨連結</span></button>
+      </div>
+      <p id="web-status" class="feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="trust-row"><span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>不傳送你貼上的網址</span><span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 8-8M4 4v6h6m-6 0 6-6"/></svg>不保留清理紀錄</span><span id="offline-state"><span class="connection-dot" aria-hidden="true"></span><span id="offline-label">本機清理</span></span></div>
+
+    <section class="about" aria-labelledby="about-title">
+      <div><h2 id="about-title">熟悉的網站，一樣好分享。</h2><p>通用追蹤清理，加上常見台灣購物網站的專屬規則。</p></div>
+      <ul class="site-list" aria-label="常見支援網站"><li>蝦皮購物</li><li>momo</li><li>PChome</li><li>酷澎</li><li>特力屋</li><li>更多網站</li></ul>
+    </section>
+
+    <details class="notes"><summary>哪些會清理，哪些會留下？<span aria-hidden="true">＋</span></summary><div><p>移除 UTM 等已知追蹤參數，並依支援的網站規則整理商品、分類與來源連結。搜尋條件、活動識別碼與未知參數預設保留，簽章連結保持原樣。乾淨的網址不會為了縮短而被多改。</p><p>蝦皮與酷澎的商品連結會整理成商品入口，不一定保留原先選取的規格或賣家。短網址不會自動展開。</p></div></details>
+    <noscript><p class="noscript">請啟用 JavaScript，才能在本機清理網址。</p></noscript>
+  </main>
+
+  <footer class="site-footer"><span>Clean URL <span aria-hidden="true">·</span> 分享，只留下重點。</span><div><button id="privacy-button" class="text-button" type="button">隱私說明</button><a href="https://github.com/bruce-yang-422/clean-url-extension" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></footer>
+
+  <dialog id="install-dialog" aria-labelledby="install-title"><form method="dialog"><button class="dialog-close" aria-label="關閉" title="關閉">×</button></form><img src="./icons/icon-128.png" width="56" height="56" alt=""><h2 id="install-title">把乾淨連結，放在手邊。</h2><p>在支援的瀏覽器中選擇「安裝應用程式」或「新增至主畫面」，之後就能直接開啟。</p><p>iPhone／iPad：使用 Safari 的分享選單，選擇「加入主畫面」。Android、Chrome／Edge：從網址列或瀏覽器選單安裝。</p><p class="dialog-note">第一次連線開啟並完成離線準備後，即可離線清理。</p></dialog>
+  <dialog id="privacy-dialog" aria-labelledby="privacy-title"><form method="dialog"><button class="dialog-close" aria-label="關閉" title="關閉">×</button></form><h2 id="privacy-title">你的連結，留在你的裝置上。</h2><p>貼上的網址只在目前頁面的記憶體處理，不儲存清理紀錄、不上傳到伺服器。按下複製時，完整結果會寫入系統剪貼簿。</p><p>離線快取只儲存應用程式與圖示，不包含你輸入的網址。網站的靜態檔案由 GitHub Pages 提供，沒有分析追蹤、外部字型或清理 API。</p></dialog>
+</body>
+</html>
