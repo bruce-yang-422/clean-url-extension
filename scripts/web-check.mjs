@@ -106,8 +106,11 @@ try {
   await until(() => evaluate("document.querySelector('#install-dialog').open"));
   await evaluate("document.querySelector('#install-dialog').close()");
   await evaluate("document.querySelector('#privacy-button').click()");
-  assert.equal(await evaluate("document.querySelector('#privacy-dialog').open"), true);
-  await evaluate("document.querySelector('#privacy-dialog').close()");
+  await until(() => evaluate("document.querySelector('#policy-title') !== null"));
+  assert.equal(await evaluate("location.href"), `${appUrl}privacy.html`);
+  assert.equal(await evaluate("document.querySelectorAll('.policy section').length"), 4);
+  await cdp("Page.navigate", { url: appUrl });
+  await until(() => evaluate("document.querySelector('#url-input') !== null"));
   await input(sample);
   if (process.argv.includes("--preview")) {
     const screenshot = await cdp("Page.captureScreenshot", { format: "png" });
@@ -135,6 +138,9 @@ try {
   await until(() => evaluate("document.querySelector('#url-input') && document.querySelector('#url-input').value === '' && typeof navigator.serviceWorker.controller?.scriptURL === 'string'"));
   await input(sample);
   await until(() => evaluate(`document.querySelector('#url-output').value === ${JSON.stringify(expected)}`));
+  await evaluate("document.querySelector('#privacy-button').click()");
+  await until(() => evaluate("document.querySelector('#policy-title') !== null"));
+  assert.equal(await evaluate("document.documentElement.scrollWidth <= innerWidth"), true);
   console.log("PASS: GitHub Pages subpath, manifest, input/preview/copy/errors, mobile layout, no URL persistence, shell-only cache, and complete offline reload/cleaning.");
   if (process.argv.includes("--preview")) await new Promise(done => setTimeout(done, 30000));
 } finally {

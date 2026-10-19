@@ -44,6 +44,7 @@ test("離線殼層只快取目前 Pages 專案", async () => {
   const { handlers, entries } = worker();
   await new Promise((resolve, reject) => handlers.get("install")({ waitUntil: promise => promise.then(resolve, reject) }));
   assert.ok(entries.has("https://example.test/clean-url-extension/index.html"));
+  assert.ok(entries.has("https://example.test/clean-url-extension/privacy.html"));
   assert.ok(entries.has("https://example.test/clean-url-extension/url-cleaner.js"));
   assert.ok([...entries.keys()].every(url => url.startsWith("https://example.test/clean-url-extension/")));
 });

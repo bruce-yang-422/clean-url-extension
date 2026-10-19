@@ -73,7 +73,6 @@ copy.addEventListener("click", async () => {
   }
 });
 
-document.getElementById("privacy-button").addEventListener("click", () => document.getElementById("privacy-dialog").showModal());
 const standalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 install.hidden = standalone();
 window.addEventListener("beforeinstallprompt", event => {

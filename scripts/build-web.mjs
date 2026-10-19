@@ -4,7 +4,7 @@ import { resolve, join, dirname, relative, sep } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const output = join(root, "web-dist");
-const files = ["index.html", "web.css", "web.js", "url-cleaner.js", "sw.js", "manifest.webmanifest", ".nojekyll", "CNAME",
+const files = ["index.html", "privacy.html", "web.css", "web.js", "url-cleaner.js", "sw.js", "manifest.webmanifest", ".nojekyll", "CNAME",
   "icons/icon-32.png", "icons/icon-128.png", "icons/apple-touch-icon.png", "icons/pwa-192.png", "icons/pwa-512.png"];
 try { assert.ok(!(await lstat(output)).isSymbolicLink(), "Refusing linked output directory"); }
 catch (error) { if (error.code !== "ENOENT") throw error; }

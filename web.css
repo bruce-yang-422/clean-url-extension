@@ -71,6 +71,15 @@ dialog .dialog-note { font-size: 11px; }
 .dialog-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: #eef1e9; color: #7c897f; font-size: 20px; }
 :focus-visible { outline: 2px solid #16836b; outline-offset: 4px; }
 .noscript { text-align: center; color: #9c5037; }
+.policy { max-width: 780px; padding-block: 38px 48px; }
+.policy h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -1px; }
+.policy p, .policy li { color: #596c61; font-size: 15px; line-height: 1.95; overflow-wrap: anywhere; }
+.policy .policy-date { margin-bottom: 30px; color: var(--muted); font-size: 13px; }
+.policy section { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); }
+.policy h2 { font-size: 20px; margin-bottom: 14px; }
+.policy ul { padding-left: 24px; }
+.policy li + li { margin-top: 12px; }
+.policy p a { color: #12846e; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 700px) {
   .site-header, main, .site-footer { width: min(520px, calc(100% - 32px)); }
   .site-header { padding-block: 20px; }
