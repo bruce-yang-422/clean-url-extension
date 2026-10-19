@@ -1,0 +1,40 @@
+:root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei", sans-serif; color: #2d3530; background: #fffef7; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { width: 360px; margin: 0; }
+main { padding: 18px 16px 16px; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 4px 18px; }
+.brand-icon { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; border: 1px solid #d2ede6; border-radius: 10px; background: #e6f6f2; color: #1d9a82; }
+svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+h1 { margin: 0; font-size: 15px; line-height: 1.25; letter-spacing: -.3px; }
+.brand-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 4px 9px; border: 1px solid #d2ede6; border-radius: 99px; background: #e6f6f2; color: #237a67; font-size: 11px; }
+.brand-badge > span { width: 6px; height: 6px; border-radius: 50%; background: #2ec4a5; }
+.card { margin-bottom: 14px; }
+h2 { display: flex; align-items: center; gap: 6px; margin: 0 4px 8px; color: #75837c; font-size: 11px; letter-spacing: .6px; font-weight: 600; }
+.url { margin: 0; padding: 12px 14px; border: 1px solid #ede9e0; border-radius: 14px; background: white; color: #5f706b; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; max-height: 104px; overflow-y: auto; user-select: text; scrollbar-width: thin; }
+.clean-card h2 { color: #2d3530; }
+.clean-card .url { border-color: #c8e8dd; background: #eaf6f1; color: #2d3530; }
+.ready-badge { padding: 2px 6px; border-radius: 99px; background: #e6f6f2; color: #237a67; font-size: 9px; letter-spacing: .4px; }
+.status { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 12px 14px; border: 1px solid #e0e8e3; background: white; border-radius: 14px; color: #5f706b; font-size: 12px; line-height: 1.6; }
+.status-icon { display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #f0ebe0; color: #687870; font-size: 14px; font-weight: 700; }
+.status.error { color: #7a5a1a; border-color: #f0e3b4; background: #fff8e0; }
+.status.error .status-icon { background: #f5d76e; color: #7a5a1a; }
+.status.neutral { color: #5f706b; background: #fbfaf6; }
+button { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 45px; padding: 12px 16px; border: 0; border-radius: 12px; background: #2ec4a5; box-shadow: 0 6px 16px #2ec4a52e, 0 1px 3px #2ec4a533; color: #163e34; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s, transform .15s, box-shadow .15s; }
+button svg { width: 17px; height: 17px; }
+button:hover:enabled { background: #26ad91; box-shadow: 0 8px 20px #2ec4a540; }
+button:active:enabled { transform: scale(.98); }
+button.copied, button.copied:hover { background: #2d3530; color: white; box-shadow: 0 4px 12px #2d35302e; }
+button:disabled { background: #f3f0e8; color: #8a7d5a; box-shadow: none; cursor: default; }
+button:focus-visible, .url:focus-visible, summary:focus-visible { outline: 2px solid #1d9a82; outline-offset: 3px; }
+#copy-feedback { margin: 10px 0 0; color: #237a67; text-align: center; font-size: 12px; line-height: 1.6; }
+#copy-feedback:empty { display: none; }
+#copy-feedback.error { color: #943f32; }
+footer { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin: 16px 4px 0; padding-top: 12px; border-top: 1px solid #f0ebe0; color: #75837c; font-size: 10px; line-height: 1.7; }
+.privacy-note { display: inline-flex; align-items: center; gap: 4px; }
+.privacy-note svg { align-self: center; width: 13px; height: 13px; }
+details { display: contents; }
+summary { cursor: pointer; list-style: none; text-decoration: underline; text-decoration-color: #d9d4c8; text-underline-offset: 3px; }
+summary::-webkit-details-marker { display: none; }
+details p { flex-basis: 100%; margin: 0; color: #5f706b; }
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }

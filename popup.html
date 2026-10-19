@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clean URL｜乾淨連結</title>
+  <link rel="stylesheet" href="popup.css">
+  <script type="module" src="popup.js"></script>
+</head>
+<body>
+  <main>
+    <header class="brand">
+      <img class="brand-icon" src="icons/icon-32.png" width="32" height="32" alt="">
+      <h1>Clean URL</h1>
+      <span class="brand-badge"><span aria-hidden="true"></span>乾淨連結</span>
+    </header>
+
+    <section class="card" aria-labelledby="original-label">
+      <h2 id="original-label">目前網址</h2>
+      <p id="original-url" class="url" dir="ltr">正在讀取目前分頁…</p>
+    </section>
+      <div id="clean-status" class="status" role="status" aria-live="polite">
+        <span class="status-icon" aria-hidden="true">✓</span>
+        <span id="status-text">正在檢查網址…</span>
+      </div>
+
+    <section id="clean-section" class="card clean-card" aria-labelledby="clean-label">
+      <h2 id="clean-label">乾淨連結 <span class="ready-badge">READY</span></h2>
+      <p id="clean-url" class="url" dir="ltr">—</p>
+    </section>
+
+    <button id="copy-button" type="button" disabled>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="14" rx="2"/><path d="M15 4H5a2 2 0 0 0-2 2v12"/></svg>
+      <span id="copy-label">複製乾淨連結</span>
+    </button>
+    <p id="copy-feedback" role="status" aria-live="polite"></p>
+    <footer>
+      <span class="privacy-note"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>僅在本機處理・不會上傳網址</span>
+      <details><summary>隱私說明</summary><p>僅在開啟彈窗時讀取目前分頁網址，不儲存瀏覽紀錄、不傳送網址。按下複製時，將完整結果寫入系統剪貼簿。</p></details>
+    </footer>
+  </main>
+</body>
+</html>

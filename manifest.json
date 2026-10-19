@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Clean URL｜乾淨連結",
+  "version": "0.1.0",
+  "description": "一鍵移除已知網址追蹤參數，在本機複製乾淨連結。",
+  "permissions": ["activeTab", "clipboardWrite"],
+  "action": {
+    "default_title": "Clean URL｜複製乾淨連結",
+    "default_popup": "popup.html",
+    "default_icon": { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" }
+  },
+  "icons": { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" }
+}
