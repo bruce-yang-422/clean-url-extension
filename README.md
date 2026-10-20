@@ -4,9 +4,21 @@
 
 **[網頁版／PWA：cleanlink.stack-base.com](https://cleanlink.stack-base.com/)**。貼上網址即可使用；可安裝到裝置，第一次連線完成離線準備後，就能離線清理。網頁版與擴充功能共用同一份清理規則。
 
-從 [**Releases**](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載擴充功能 ZIP，解壓縮後依下方步驟安裝。
+**[從 Chrome 線上應用程式商店安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)**。也可從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 ZIP 手動安裝。
 
 ## 安裝與使用
+
+### 商店安裝（建議）
+
+1. 使用 Chrome 開啟 [Clean URL｜乾淨連結商店頁面](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)。
+2. 點選「加到 Chrome」，依提示確認安裝。
+3. 開啟一般網頁，點選工具列的 Clean URL 圖示，再按「複製乾淨連結」。可從擴充功能選單將圖示固定在工具列。
+
+Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其他商店的擴充功能後安裝。
+
+### ZIP／開發者手動安裝
+
+從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載擴充功能 ZIP 並解壓縮，或使用本機專案檔案：
 
 1. Chrome 開啟 `chrome://extensions`；Edge 開啟 `edge://extensions`。
 2. 開啟「開發人員模式」，選擇「載入未封裝項目」。
