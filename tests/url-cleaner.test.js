@@ -62,6 +62,8 @@ for (const [name, input, expected, count] of cases) {
 }
 
 test("PChome 商品移除全部查詢參數", () => {
+  assert.equal(cleanUrl("https://24h.pchome.com.tw/prod/DBCC0K-1900JZJFA?prid=OR7255102&prt=order-event").cleanedUrl,
+    "https://24h.pchome.com.tw/prod/DBCC0K-1900JZJFA");
   const base = "https://24h.pchome.com.tw/prod/DEBYFT-A900J0QDA";
   assert.equal(cleanUrl(`${base}?recommend_id=recapi-568575bff5-6mc2l_test01_1794422694_20570022`).cleanedUrl, base);
   assert.equal(cleanUrl(`${base}?unknown=1&sig=2#spec`).cleanedUrl, `${base}#spec`);
