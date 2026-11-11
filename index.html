@@ -4,15 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fffef7">
-  <meta name="description" content="貼上網址，一鍵複製乾淨連結。在你的裝置上移除追蹤參數，可安裝並離線使用。">
+  <!-- 搜尋摘要與標準網址：統一指向正式首頁。 -->
+  <meta name="description" content="Clean URL 免費網址清理工具，一鍵移除 UTM 等追蹤參數，整理蝦皮、momo、PChome 與酷澎商品連結。網址在裝置本機處理，不保留清理紀錄，可安裝並離線使用。">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://cleanlink.stack-base.com/">
   <meta property="og:url" content="https://cleanlink.stack-base.com/">
-  <meta property="og:title" content="Clean URL｜讓分享的連結，乾淨一點">
+  <!-- 社群分享預覽使用正式網址與既有應用程式圖示。 -->
+  <meta property="og:site_name" content="Clean URL">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="Clean URL｜免費網址清理工具・移除 UTM 追蹤參數">
   <meta property="og:description" content="貼上網址，一鍵移除追蹤參數。可安裝、可離線，網址只在你的裝置上處理。">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cleanlink.stack-base.com/icons/pwa-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="Clean URL 乾淨連結應用程式圖示">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Clean URL｜免費網址清理工具・移除 UTM 追蹤參數">
+  <meta name="twitter:description" content="一鍵清理追蹤參數與購物商品連結，在本機處理、不保留紀錄，可離線使用。">
+  <meta name="twitter:image" content="https://cleanlink.stack-base.com/icons/pwa-512.png">
+  <meta name="twitter:image:alt" content="Clean URL 乾淨連結應用程式圖示">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Clean URL">
-  <title>Clean URL｜讓分享的連結，乾淨一點</title>
+  <title>Clean URL｜免費網址清理工具・移除 UTM 追蹤參數</title>
+  <!-- 描述實際提供的網頁工具，不加入未經驗證的評分或評論。 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": "https://cleanlink.stack-base.com/#app",
+    "name": "Clean URL",
+    "alternateName": "乾淨連結",
+    "url": "https://cleanlink.stack-base.com/",
+    "description": "免費網址清理工具，移除 UTM 等追蹤參數，並依網站規則整理購物連結。在本機處理，可安裝並離線使用。",
+    "inLanguage": "zh-Hant",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "支援現代網頁瀏覽器的作業系統",
+    "isAccessibleForFree": true,
+    "image": "https://cleanlink.stack-base.com/icons/pwa-512.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TWD" },
+    "featureList": ["移除 UTM 等已知追蹤參數", "整理常見台灣購物網站連結", "本機處理，不保留清理紀錄", "安裝後離線使用"]
+  }
+  </script>
   <link rel="icon" type="image/png" href="./icons/icon-32.png">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
   <link rel="manifest" href="./manifest.webmanifest">
@@ -32,7 +65,7 @@
     <section class="intro" aria-labelledby="page-title">
       <span class="eyebrow"><span aria-hidden="true"></span>簡單分享，少一點追蹤</span>
       <h1 id="page-title">讓分享的連結，<span>乾淨一點。</span></h1>
-      <p>貼上網址，留下你想分享的內容。<br class="mobile-break">清理與複製，都在你的裝置上完成。</p>
+      <p>免費網址清理工具，一鍵移除 UTM 等追蹤參數。<br class="mobile-break">清理與複製，都在你的裝置上完成。</p>
     </section>
 
     <section class="workspace" aria-label="網址清理工具">
@@ -56,7 +89,7 @@
       <ul class="site-list" aria-label="常見支援網站"><li>蝦皮購物</li><li>momo</li><li>PChome</li><li>酷澎</li><li>特力屋</li><li>更多網站</li></ul>
     </section>
 
-    <details class="notes"><summary>哪些會清理，哪些會留下？<span aria-hidden="true">＋</span></summary><div><p>移除 UTM 等已知追蹤參數，並依支援的網站規則整理商品、分類與來源連結。搜尋條件、活動識別碼與未知參數預設保留，簽章連結保持原樣。乾淨的網址不會為了縮短而被多改。</p><p>蝦皮與酷澎的商品連結會整理成商品入口，不一定保留原先選取的規格或賣家。短網址不會自動展開。</p></div></details>
+    <details class="notes"><summary>哪些會清理，哪些會留下？<span aria-hidden="true">＋</span></summary><div><p>移除 UTM 等已知追蹤參數，並依支援的網站規則整理商品、分類與來源連結。搜尋條件、活動識別碼與未知參數預設保留；PChome 24h 商品頁會移除全部查詢參數，其餘簽章連結保持原樣。</p><p>蝦皮與酷澎的商品連結會整理成商品入口，不一定保留原先選取的規格或賣家。短網址不會自動展開。</p></div></details>
     <noscript><p class="noscript">請啟用 JavaScript，才能在本機清理網址。</p></noscript>
   </main>
 
