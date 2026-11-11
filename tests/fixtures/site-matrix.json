@@ -12,7 +12,7 @@
   ["momo／活動代碼保留", "https://www.momoshop.com.tw/edm/cmmedm.jsp?lpn=campaign123&n=1&ctype=B&mdiv=banner&utm_source=line", "https://www.momoshop.com.tw/edm/cmmedm.jsp?lpn=campaign123&n=1&ctype=B", 2],
   ["momo／分類頁保留來源不誤判商品", "https://www.momoshop.com.tw/category/DgrpCategory.jsp?d_code=123&mdiv=100&utm_source=line", "https://www.momoshop.com.tw/category/DgrpCategory.jsp?d_code=123&mdiv=100", 1],
   ["momo／TP 商店保留分類", "https://www.momoshop.com.tw/TP/TP0000001?category=123&utm_source=line", "https://www.momoshop.com.tw/TP/TP0000001?category=123", 1],
-  ["PChome／商品功能參數", "https://24h.pchome.com.tw/prod/TEST01-A900TEST1?fq=%2FS%2FABC&gclsrc=aw.ds&gad_source=1", "https://24h.pchome.com.tw/prod/TEST01-A900TEST1?fq=%2FS%2FABC", 2],
+  ["PChome／商品移除全部參數", "https://24h.pchome.com.tw/prod/TEST01-A900TEST1?fq=%2FS%2FABC&gclsrc=aw.ds&gad_source=1", "https://24h.pchome.com.tw/prod/TEST01-A900TEST1", 3],
   ["PChome／分類排序分頁", "https://24h.pchome.com.tw/region/ABC?sort=price&page=2&utm_source=line", "https://24h.pchome.com.tw/region/ABC?sort=price&page=2", 1],
   ["PChome／商店入口", "https://24h.pchome.com.tw/store/ABC?sort=price&mkt_tok=abc", "https://24h.pchome.com.tw/store/ABC?sort=price", 1],
   ["PChome／搜尋關鍵字", "https://24h.pchome.com.tw/search/?q=tea&page=2&_ga=abc", "https://24h.pchome.com.tw/search/?q=tea&page=2", 1],

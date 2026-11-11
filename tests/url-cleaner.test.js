@@ -61,6 +61,16 @@ for (const [name, input, expected, count] of cases) {
   });
 }
 
+test("PChome 商品移除全部查詢參數", () => {
+  const base = "https://24h.pchome.com.tw/prod/DEBYFT-A900J0QDA";
+  assert.equal(cleanUrl(`${base}?recommend_id=recapi-568575bff5-6mc2l_test01_1794422694_20570022`).cleanedUrl, base);
+  assert.equal(cleanUrl(`${base}?unknown=1&sig=2#spec`).cleanedUrl, `${base}#spec`);
+  assert.equal(cleanUrl(`${base}?`).cleanedUrl, base);
+  for (const other of ["https://24h.pchome.com.tw/search", "https://24h.pchome.com.tw.example.com/prod/DEBYFT-A900J0QDA"]) {
+    assert.equal(cleanUrl(`${other}?recommend_id=keep`).cleanedUrl, `${other}?recommend_id=keep`);
+  }
+});
+
 test("長網址完整保留", () => {
   const query = "中文%20a+".repeat(4000);
   assert.equal(cleanUrl(`https://example.com/?q=${query}&utm_source=test#end`).cleanedUrl, `https://example.com/?q=${query}#end`);

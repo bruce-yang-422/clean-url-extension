@@ -1,5 +1,7 @@
+/* 全站色彩變數、字型與基本樣式。 */
 :root { color-scheme: light; --paper: #fffef7; --ink: #2d3530; --muted: #75837c; --line: #e7e8df; --mint: #2ec4a5; --mint-soft: #eaf6f1; font-family: system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei", sans-serif; background: var(--paper); color: var(--ink); }
 * { box-sizing: border-box; }
+/* 確保 hidden 屬性不被元件的 display 規則覆蓋。 */
 [hidden] { display: none !important; }
 body { margin: 0; background: radial-gradient(ellipse at 50% 26%, #e6f6f277, transparent 48%); }
 button, textarea { font: inherit; }
@@ -7,16 +9,19 @@ button, a, summary { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+/* 共用內容寬度，以及頁首品牌與導覽排列。 */
 .site-header, main, .site-footer { width: min(1040px, calc(100% - 64px)); margin-inline: auto; }
 .site-header { display: flex; justify-content: space-between; align-items: center; padding-block: 28px; gap: 20px; }
 .brand { display: flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 750; letter-spacing: -.5px; }
 .brand img { border-radius: 12px; }
 .brand small { display: block; margin-top: 1px; font-size: 10px; font-weight: 500; letter-spacing: 1.6px; color: var(--muted); }
 nav { display: flex; align-items: center; gap: 26px; font-size: 12px; color: #5c6c63; }
+/* 共用按鈕外觀與互動狀態。 */
 .button { display: inline-flex; justify-content: center; align-items: center; gap: 9px; min-height: 42px; padding: 11px 16px; border-radius: 11px; border: 1px solid transparent; font-size: 13px; font-weight: 650; transition: background .15s, transform .15s; }
 .button:active:enabled { transform: translateY(1px); }
 .button-outline { border-color: #d8e6dc; background: #ffffff80; color: #436052; }
 .button-outline:hover { background: #eaf6f1; }
+/* 首頁標題與簡介。 */
 .intro { text-align: center; padding: 44px 0 37px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 7px; color: #528375; font-size: 11px; letter-spacing: 1.5px; }
 .eyebrow > span, .connection-dot { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: #2ec4a5; }
@@ -24,6 +29,7 @@ h1 { margin: 18px 0 15px; font-size: clamp(30px, 4.2vw, 46px); font-weight: 750;
 h1 > span { color: #159980; }
 .intro > p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.9; }
 .mobile-break { display: none; }
+/* 桌面使用雙欄清理區；min-width: 0 避免長網址撐開欄位。 */
 .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 28px; border: 1px solid #e5e9df; border-radius: 22px; background: #ffffffba; box-shadow: 0 12px 48px #2d353008, 0 2px 8px #2d353004; }
 .input-panel, .output-panel { min-width: 0; }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; margin: 0 2px 12px; }
@@ -38,6 +44,7 @@ textarea[aria-invalid="true"] { border-color: #c58465; }
 .text-button { padding: 0; border: 0; background: transparent; color: #6c7f72; font-size: 11px; line-height: 1.6; }
 .text-button:hover:enabled { color: #16836b; }
 .text-button:disabled { opacity: .4; cursor: default; }
+/* 清理完成、複製成功與錯誤回饋。 */
 .ready { padding: 3px 7px; border-radius: 99px; background: #e3f5ec; color: #348471; font-size: 9px; letter-spacing: .8px; font-weight: 650; }
 .button-primary { width: 100%; margin-top: 12px; min-height: 43px; background: var(--mint); color: #163e34; box-shadow: 0 4px 12px #2ec4a525; }
 .button-primary:hover:enabled { background: #26b395; }
@@ -46,6 +53,7 @@ textarea[aria-invalid="true"] { border-color: #c58465; }
 .feedback { grid-column: 1 / -1; min-height: 0; margin: -10px 0 0; color: #438470; font-size: 12px; line-height: 1.7; text-align: center; }
 .feedback:empty { display: none; }
 .feedback.error { color: #9c5037; }
+/* 本機處理說明、支援網站與使用注意事項。 */
 .trust-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin: 20px 0 45px; color: #85958a; font-size: 10px; }
 .trust-row > span { display: inline-flex; align-items: center; gap: 5px; }
 .trust-row svg { width: 13px; height: 13px; }
@@ -63,14 +71,17 @@ summary::-webkit-details-marker { display: none; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0 30px; color: #919d94; font-size: 10px; }
 .site-footer > div { display: flex; gap: 22px; }
 .site-footer .text-button { color: inherit; font-size: inherit; }
+/* 安裝說明對話框與背景遮罩。 */
 dialog { max-width: min(440px, calc(100% - 32px)); padding: 30px; border: 1px solid #e0e7db; border-radius: 20px; background: var(--paper); color: var(--ink); box-shadow: 0 20px 90px #20382b26; }
 dialog::backdrop { background: #22382c50; backdrop-filter: blur(3px); }
 dialog h2 { margin: 16px 0; font-size: 20px; }
 dialog p { color: #758378; font-size: 13px; line-height: 1.9; }
 dialog .dialog-note { font-size: 11px; }
 .dialog-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: #eef1e9; color: #7c897f; font-size: 20px; }
+/* 鍵盤操作時保留清楚的焦點提示。 */
 :focus-visible { outline: 2px solid #16836b; outline-offset: 4px; }
 .noscript { text-align: center; color: #9c5037; }
+/* 隱私權政策頁的閱讀寬度與段落排版。 */
 .policy { max-width: 780px; padding-block: 38px 48px; }
 .policy h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -1px; }
 .policy p, .policy li { color: #596c61; font-size: 15px; line-height: 1.95; overflow-wrap: anywhere; }
@@ -80,6 +91,7 @@ dialog .dialog-note { font-size: 11px; }
 .policy ul { padding-left: 24px; }
 .policy li + li { margin-top: 12px; }
 .policy p a { color: #12846e; text-decoration: underline; text-underline-offset: 3px; }
+/* 窄螢幕改為單欄；16px 輸入字級可避免部分行動瀏覽器自動放大。 */
 @media (max-width: 700px) {
   .site-header, main, .site-footer { width: min(520px, calc(100% - 32px)); }
   .site-header { padding-block: 12px; }
@@ -106,10 +118,12 @@ dialog .dialog-note { font-size: 11px; }
   .site-footer { align-items: flex-start; font-size: 9px; }
   .site-footer > div { gap: 15px; }
 }
+/* 高度較小的行動視窗縮減介紹區，增加操作區的可見空間。 */
 @media (max-width: 700px) and (max-height: 620px) {
   .intro .eyebrow, .intro > p { display: none; }
   .intro { padding: 2px 0 12px; }
   .intro h1 { margin: 0; font-size: 24px; }
   .intro h1 > span { display: inline; }
 }
+/* 尊重使用者減少動態效果的系統偏好。 */
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }

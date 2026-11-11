@@ -22,7 +22,7 @@ for (const [name, input, expected, count] of matrix) {
     assert.equal(cleanUrl(expected).cleanedUrl, expected, "清理後再次清理不應改變");
     assert.equal(cleanUrl(appendQuery(input, campaign)).cleanedUrl, expected, "通用參數不得依網站漏刪");
     const signed = appendQuery(input, "X-Amz-Signature=do-not-change");
-    assert.equal(cleanUrl(signed).cleanedUrl, signed, "簽章不可因網站規則被改寫");
+    assert.equal(cleanUrl(signed).cleanedUrl, name === "PChome／商品移除全部參數" ? expected : signed, "PChome 商品依要求移除全部參數，其餘保護簽章");
   });
 }
 

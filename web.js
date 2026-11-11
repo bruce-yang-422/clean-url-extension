@@ -21,6 +21,7 @@ function message(text, error = false) {
   status.classList.toggle("error", error);
 }
 
+// 輸入變更時重設舊結果與提示，再於本機重新清理網址。
 function update() {
   clearTimeout(feedbackTimer);
   copy.classList.remove("copied");
@@ -53,6 +54,7 @@ document.getElementById("example-button").addEventListener("click", () => {
   update();
   input.focus();
 });
+// 保留當次複製內容；等待期間若網址已變更，不顯示過期的回饋。
 copy.addEventListener("click", async () => {
   if (!currentUrl) return;
   const value = currentUrl;
@@ -74,6 +76,7 @@ copy.addEventListener("click", async () => {
   }
 });
 
+// 獨立視窗不顯示安裝按鈕；保存瀏覽器安裝事件供使用者點擊時呼叫。
 const standalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 install.hidden = standalone();
 window.addEventListener("beforeinstallprompt", event => {
@@ -90,22 +93,25 @@ install.addEventListener("click", async () => {
   catch { installDialog.showModal(); }
 });
 
+// 區分目前離線、離線資源已就緒，以及一般本機清理狀態。
 function connectionState() {
   offlineLabel.textContent = !navigator.onLine ? "離線模式" : offlineReady ? "已可離線使用" : "本機清理";
 }
 window.addEventListener("online", connectionState);
 window.addEventListener("offline", connectionState);
 connectionState();
-// Cache only the app shell. Input URLs never become requests or cache entries.
+// 僅快取應用程式介面；輸入網址不會成為網路請求或快取項目。
 if ("serviceWorker" in navigator && window.isSecureContext) {
   navigator.serviceWorker.register(new URL("./sw.js", import.meta.url), { scope: "./" })
     .then(() => navigator.serviceWorker.ready)
     .then(() => { offlineReady = true; connectionState(); })
     .catch(() => { offlineLabel.textContent = "離線準備未完成，請連線重試"; });
 }
+// 優先讀取 Service Worker 注入的分享資料，亦相容 #share= 格式。
 const shareMarker = document.querySelector('meta[name="clean-url-share"]');
 const shared = sharedInput(shareMarker ? `#share=${shareMarker.content}` : location.hash);
 if (shared !== null) {
+  // 解析後清除分享片段與暫存標記，避免資料留在目前網址或頁面中。
   history.replaceState(null, "", shareMarker ? new URL("./", import.meta.url).pathname : location.pathname + location.search);
   shareMarker?.remove();
   input.value = shared;
