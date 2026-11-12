@@ -6,6 +6,8 @@
 
 **[從 Chrome 線上應用程式商店安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)**。也可從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 ZIP 手動安裝。
 
+目前版本：**v0.1.13**，更新內容見 [版本紀錄](Release_notes_v0.1.13.md)。
+
 ## 安裝與使用
 
 ### 商店安裝（建議）
@@ -33,7 +35,7 @@ Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其
 
 - 移除 `utm_*`（名稱不分大小寫）及 `fbclid`、`gclid`、`dclid`、`gbraid`、`wbraid`、`msclkid`、`ttclid`、`twclid`、`igshid`、`mc_cid`、`mc_eid`、`_ga`、`_gl`、`srsltid`、`gad_source`、`gad_campaignid`。
 - 通用清理也涵蓋已知的 Google `gclsrc`、Facebook 來源欄位、Mailchimp `mc_tc`、Marketo `mkt_tok` 及 Matomo 行銷參數；不因名稱含有 `source`、`ref`、`id` 就整批刪除。
-- 蝦皮台灣站的 `商品名稱-i.賣場ID.商品ID` 網址縮短為 `/product/賣場ID/商品ID`，保留功能參數與片段。其他網站的路徑維持原樣。
+- 蝦皮台灣站的 `商品名稱-i.賣場ID.商品ID` 網址縮短為 `/product/賣場ID/商品ID`，保留功能參數與片段。酷澎商品路徑亦依下述規則縮短。
 - 蝦皮商品頁的 `extraParams` 若只含有效的 `display_model_id` 及可選的 `model_selection_logic`，會移除以分享純商品入口，不再預選商品規格。若包含其他欄位或格式未知則保留。
 - 蝦皮分類頁將 `分類名稱-cat.分類ID` 縮短為 `c-cat.分類ID`，保留一至三層完整 ID，以及篩選、排序、分頁參數。搜尋頁與賣場頁保留原路徑及功能參數，只移除已知追蹤參數。
 - 蝦皮賣場頁含 `entryPoint=ShopByPDP` 時，移除此標記及有效數字格式的 `categoryId`、`itemId`，分享純賣場入口，不預選來源商品或分類。未知參數、賣場自訂分類與其他來源標記仍保留。
@@ -42,12 +44,13 @@ Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其
 - momo 活動頁 `/edm/cmmedm.jsp` 帶有有效 `lpn` 時，移除入口參數 `mdiv`；保留 `lpn`、`n`、`ctype` 與未知參數，避免活動頁失效。
 - momo 商品頁帶有 `Area=search` 時，移除搜尋入口資訊：此標記、數字 `mdiv`、位置格式 `oid`、`cid=index`、`kw` 與空值 `ecTagNos`。不將這套規則套用至搜尋頁，也不移除非空活動標記與未知規格參數。
 - momo 商品頁也辨識首頁／分類入口與數字、橫幅格式的 `mdiv`；已知入口位置可移除，未知值保留。來源規則依頁面類型決定，不要求每筆網址恰好帶著相同一組參數。
-- 酷澎台灣商品頁移除數字格式的 `itemId`、`vendorItemId` 及已知廣告歸因、來源與重複商品頁資訊，分享純商品入口，不再固定規格或賣家；未知參數保留。`pid`、`spec`、`src` 等同名參數不會從其他網站刪除。特力屋與 PChome 適用通用 UTM、Google 廣告參數清理。
+- 酷澎台灣商品頁移除數字格式的 `itemId`、`vendorItemId` 及已知廣告歸因、來源與重複商品頁資訊，分享純商品入口，不再固定規格或賣家；未知參數保留。`pid`、`spec`、`src` 等同名參數不會從其他網站刪除。特力屋適用通用 UTM、Google 廣告參數清理。
+- PChome 24h 的 `/prod/商品代碼` 商品頁移除 `?` 與全部查詢參數，包括 `recommend_id`、`prid`、`prt` 及未知參數；保留商品路徑與 `#` 片段。此規則優先於簽章保護，搜尋、分類及商店頁仍只套用通用清理。
 - 酷澎有商品名稱的路徑會縮短為 `/products/商品ID`；商品頁的已知搜尋排序／歸因參數也會清除。只有 `sourceType=search` 或 `CATEGORY` 的來源情境才移除搜尋關鍵字／分類來源，實際搜尋頁的條件保留。
 - momo 品牌搜尋的 `searchType`、`brand`、`brandNo`、`isBrandPage`、`serviceCode`、`_isFuzzy` 會影響搜尋／篩選，預設保留。不把所有長網址強制縮短。
-- 保留商品編號、搜尋條件、未知參數與 `#` 片段。保留剩餘參數的原始順序、重複值及編碼，不重新序列化整段網址。
+- 除上述網站專屬規則外，保留商品編號、搜尋條件、未知參數與 `#` 片段。保留剩餘參數的原始順序、重複值及編碼，不重新序列化整段網址。
 - 每次出現的追蹤參數各計為一項；已乾淨的網址維持原樣，仍可複製。
-- 偵測到 `X-Amz-Signature`、`X-Goog-Signature`、`Signature` 或 `sig` 時保留整條連結，避免破壞簽章。這不是完整的簽章格式辨識器。
+- 偵測到 `X-Amz-Signature`、`X-Goog-Signature`、`Signature` 或 `sig` 時保留整條連結，避免破壞簽章；PChome 24h 商品頁依上述規則移除全部查詢參數。這不是完整的簽章格式辨識器。
 - 僅支援 HTTP／HTTPS；瀏覽器內部頁面、檔案頁面及其他特殊協定會顯示提示。
 - 不展開短網址、不追蹤轉址、不清理巢狀連結，也不改動目前分頁。
 - 長原始網址會縮略顯示，滑鼠停留可查看完整網址；清理結果可捲動、選取並手動複製，按鈕永遠複製完整結果。
@@ -69,6 +72,8 @@ npm run build:web
 輸出 `web-dist/`，只包含網站所需的靜態檔案。可用一般靜態 HTTP 伺服器預覽；離線與安裝功能需要 HTTPS 或 localhost，不支援直接雙擊 HTML 的 `file://` 模式。
 
 GitHub Pages 從 `main` 分支的根目錄發布，入口為 `index.html`，`.nojekyll` 讓檔案直接作為靜態網站提供。儲存庫 Settings → Pages 的 Source 使用「Deploy from a branch」，Branch 選 `main`、`/(root)`。自訂網域為 `cleanlink.stack-base.com`，DNS CNAME 指向 `bruce-yang-422.github.io`，並啟用 HTTPS。相關設定見 [GitHub Pages 官方文件](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site)。
+
+首頁提供搜尋標題與摘要、canonical、Open Graph／Twitter 分享預覽，以及 WebApplication JSON-LD 結構化資料；正式網址統一為 `https://cleanlink.stack-base.com/`。
 
 PWA 使用獨立的 `manifest.webmanifest`，不影響擴充功能的 `manifest.json`。網站建置不包含擴充功能彈窗、測試、腳本或 ICO 原稿。
 
@@ -92,7 +97,7 @@ npm run check
 
 核心測試使用虛構資料，涵蓋中文、原始編碼、重複與空值參數、長網址、片段、功能參數、簽章及不支援協定。
 
-`tests/fixtures/site-matrix.json` 涵蓋 8 個網站／服務、30 種頁面情境。矩陣測試對每種類型同時驗證預期結果、通用追蹤清理、簽章保護與重複清理穩定性。瀏覽器整合測試共用同一份矩陣，直接檢查交付版本的預覽與剪貼簿。
+`tests/fixtures/site-matrix.json` 涵蓋 8 個網站／服務、30 種頁面情境。矩陣測試對每種類型同時驗證預期結果、通用追蹤清理、簽章保護（含 PChome 商品例外）與重複清理穩定性。瀏覽器整合測試共用同一份矩陣，直接檢查交付版本的預覽與剪貼簿。
 
 更新後使用單一指令產生本機交付檔：
 
