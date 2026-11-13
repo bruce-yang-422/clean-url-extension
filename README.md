@@ -6,7 +6,7 @@
 
 **[從 Chrome 線上應用程式商店安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)**。也可從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 ZIP 手動安裝。
 
-目前版本：**v0.1.14**，更新內容見 [版本紀錄](Release_notes_v0.1.14.md)。
+目前版本：**v0.1.14**，更新內容見 [版本紀錄](GitHub_Release_v0.1.14.md)。
 
 ## 安裝與使用
 
