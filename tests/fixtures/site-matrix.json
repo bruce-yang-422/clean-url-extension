@@ -1,4 +1,8 @@
 [
+  ["Threads／貼文分享參數", "https://www.threads.com/@kamacaw_/post/DfqKLeLk2dO?xmt=AQG0nNBP_akqMpyk273K8chZ2LtCJrAJSpUEeUoka-U7DmcLseWrsPZAWFyKuljRzu3fXiDL&slof=1", "https://www.threads.com/@kamacaw_/post/DfqKLeLk2dO", 2],
+  ["Threads／保留其他功能參數", "https://www.threads.net/@user/post/abc?xmt=abc&slof=1&lang=zh", "https://www.threads.net/@user/post/abc?lang=zh", 2],
+  ["Threads／非貼文保留", "https://www.threads.com/@user?xmt=abc&slof=1", "https://www.threads.com/@user?xmt=abc&slof=1", 0],
+  ["Threads／其他網域保留", "https://example.com/@user/post/abc?xmt=abc&slof=1", "https://example.com/@user/post/abc?xmt=abc&slof=1", 0],
   ["蝦皮／商品圖片選取", "https://shopee.tw/product/745726252/40167663711?image_ids=tw-11134211-820l5-mt24rc08kbnu48", "https://shopee.tw/product/745726252/40167663711", 1],
   ["蝦皮／搜尋圖片參數保留", "https://shopee.tw/search?image_ids=abc", "https://shopee.tw/search?image_ids=abc", 0],
   ["蝦皮／商品與四種歸因參數", "https://shopee.tw/title-i.123.456?sp_atk=a&xptdk=b&publish_id=c&uls_trackid=d&utm_source=line", "https://shopee.tw/product/123/456", 5],
