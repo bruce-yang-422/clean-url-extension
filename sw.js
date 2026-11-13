@@ -1,7 +1,7 @@
 // 依註冊範圍區分快取，避免影響同網域其他專案，並支援子目錄部署。
 const SCOPE = new URL(self.registration.scope);
 const CACHE_PREFIX = `clean-url-${encodeURIComponent(SCOPE.pathname)}-`;
-const CACHE_NAME = `${CACHE_PREFIX}web-v3`;
+const CACHE_NAME = `${CACHE_PREFIX}web-v4`;
 const SHELL = ["./", "./index.html", "./privacy.html", "./web.css", "./web.js", "./url-cleaner.js", "./share-target.js", "./manifest.webmanifest",
   "./icons/icon-32.png", "./icons/icon-128.png", "./icons/apple-touch-icon.png", "./icons/pwa-192.png", "./icons/pwa-512.png"];
 const ASSETS = new Set(SHELL.map(path => new URL(path, SCOPE).href));

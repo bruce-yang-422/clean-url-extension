@@ -114,7 +114,7 @@ export function cleanUrl(input) {
   // 逐項判斷並統計移除數量；保留的參數沿用原始編碼與順序。
   const retained = entries.filter(({ name, value }) => {
     const tracking = name.startsWith("utm_") || TRACKING_PARAMETERS.has(name);
-    // 分享蝦皮商品時移除預選規格；若包裝內含未知欄位，則完整保留。
+    // 分享蝦皮商品時移除圖片選取及預選規格；規格包裝含未知欄位則保留。
     const selection = shopeeProduct && ((name === "extraparams" && isDisplayModelSelection(value))
       || name === "image_ids");
     // 從商品頁進入賣場時，移除入口及商品脈絡，分享單純的賣場網址。
@@ -135,7 +135,12 @@ export function cleanUrl(input) {
       || (coupangSearch && ["sourcetype", "q", "categoryid"].includes(name))
       || (name === "redirect" && value === "landing"));
     const shopeeSource = shopee && SHOPEE_TRACKING_PARAMETERS.has(name);
-    const remove = tracking || shopeeSource || selection || shopContext || momoSource || coupangSource;
+    // Threads 貼文分享附帶參數；只在官方貼文路徑移除。
+    const threadsSource = ["threads.com", "www.threads.com", "threads.net", "www.threads.net"].includes(parsed.hostname)
+      && !parsed.username && !parsed.password && !parsed.port
+      && /^\/@[^/]+\/post\/[^/]+\/?$/.test(parsed.pathname)
+      && ["xmt", "slof"].includes(name);
+    const remove = tracking || shopeeSource || selection || shopContext || momoSource || coupangSource || threadsSource;
     if (remove) result.removedCount++;
     return !remove;
   });

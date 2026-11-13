@@ -6,7 +6,7 @@
 
 **[從 Chrome 線上應用程式商店安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)**。也可從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 ZIP 手動安裝。
 
-目前版本：**v0.1.13**，更新內容見 [版本紀錄](Release_notes_v0.1.13.md)。
+目前版本：**v0.1.14**，更新內容見 [版本紀錄](Release_notes_v0.1.14.md)。
 
 ## 安裝與使用
 
@@ -36,7 +36,8 @@ Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其
 - 移除 `utm_*`（名稱不分大小寫）及 `fbclid`、`gclid`、`dclid`、`gbraid`、`wbraid`、`msclkid`、`ttclid`、`twclid`、`igshid`、`mc_cid`、`mc_eid`、`_ga`、`_gl`、`srsltid`、`gad_source`、`gad_campaignid`。
 - 通用清理也涵蓋已知的 Google `gclsrc`、Facebook 來源欄位、Mailchimp `mc_tc`、Marketo `mkt_tok` 及 Matomo 行銷參數；不因名稱含有 `source`、`ref`、`id` 就整批刪除。
 - 蝦皮台灣站的 `商品名稱-i.賣場ID.商品ID` 網址縮短為 `/product/賣場ID/商品ID`，保留功能參數與片段。酷澎商品路徑亦依下述規則縮短。
-- 蝦皮商品頁的 `extraParams` 若只含有效的 `display_model_id` 及可選的 `model_selection_logic`，會移除以分享純商品入口，不再預選商品規格。若包含其他欄位或格式未知則保留。
+- 蝦皮商品頁移除圖片選取參數 `image_ids`；`extraParams` 若只含有效的 `display_model_id` 及可選的 `model_selection_logic`，會移除以分享純商品入口，不再預選商品規格。若包含其他欄位或格式未知則保留。
+- Threads 的 `threads.com`、`threads.net`（含 `www`）貼文頁 `/@帳號/post/貼文ID` 移除 `xmt`、`slof` 分享附加參數，保留其他功能參數與片段；非貼文頁不套用此規則。
 - 蝦皮分類頁將 `分類名稱-cat.分類ID` 縮短為 `c-cat.分類ID`，保留一至三層完整 ID，以及篩選、排序、分頁參數。搜尋頁與賣場頁保留原路徑及功能參數，只移除已知追蹤參數。
 - 蝦皮賣場頁含 `entryPoint=ShopByPDP` 時，移除此標記及有效數字格式的 `categoryId`、`itemId`，分享純賣場入口，不預選來源商品或分類。未知參數、賣場自訂分類與其他來源標記仍保留。
 - 蝦皮各頁面一律清除 `sp_atk`、`xptdk`、`publish_id`、`uls_trackid` 等專屬歸因參數，不套用到其他網站。
