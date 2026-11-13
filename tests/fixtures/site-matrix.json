@@ -1,4 +1,6 @@
 [
+  ["蝦皮／商品圖片選取", "https://shopee.tw/product/745726252/40167663711?image_ids=tw-11134211-820l5-mt24rc08kbnu48", "https://shopee.tw/product/745726252/40167663711", 1],
+  ["蝦皮／搜尋圖片參數保留", "https://shopee.tw/search?image_ids=abc", "https://shopee.tw/search?image_ids=abc", 0],
   ["蝦皮／商品與四種歸因參數", "https://shopee.tw/title-i.123.456?sp_atk=a&xptdk=b&publish_id=c&uls_trackid=d&utm_source=line", "https://shopee.tw/product/123/456", 5],
   ["蝦皮／分類與排序", "https://shopee.tw/title-cat.1.2.3?sortBy=sales&page=2&sp_atk=a&xptdk=b", "https://shopee.tw/c-cat.1.2.3?sortBy=sales&page=2", 2],
   ["蝦皮／賣場與商品入口", "https://shopee.tw/my_shop?categoryId=1&entryPoint=ShopByPDP&itemId=2&publish_id=ad", "https://shopee.tw/my_shop", 4],

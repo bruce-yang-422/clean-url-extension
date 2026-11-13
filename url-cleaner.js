@@ -115,7 +115,8 @@ export function cleanUrl(input) {
   const retained = entries.filter(({ name, value }) => {
     const tracking = name.startsWith("utm_") || TRACKING_PARAMETERS.has(name);
     // 分享蝦皮商品時移除預選規格；若包裝內含未知欄位，則完整保留。
-    const selection = shopeeProduct && name === "extraparams" && isDisplayModelSelection(value);
+    const selection = shopeeProduct && ((name === "extraparams" && isDisplayModelSelection(value))
+      || name === "image_ids");
     // 從商品頁進入賣場時，移除入口及商品脈絡，分享單純的賣場網址。
     const shopContext = shopByProduct && ((name === "entrypoint" && value === "ShopByPDP")
       || (["categoryid", "itemid"].includes(name) && /^\d+$/.test(value)));
