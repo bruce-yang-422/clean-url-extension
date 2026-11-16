@@ -1,123 +1,157 @@
 # Clean URL｜乾淨連結
 
-一鍵移除已知網址追蹤參數，預覽並複製乾淨連結。適用於支援 Manifest V3 的 Chrome／Edge；使用原生 HTML、CSS、JavaScript，無須編譯或安裝套件。
+**繁體中文** | [English](README.en.md)
 
-**[網頁版／PWA：cleanlink.stack-base.com](https://cleanlink.stack-base.com/)**。貼上網址即可使用；可安裝到裝置，第一次連線完成離線準備後，就能離線清理。網頁版與擴充功能共用同一份清理規則。
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-%E5%AE%89%E8%A3%9D-1d9a82?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)
+[![GitHub release](https://img.shields.io/github/v/release/bruce-yang-422/clean-url-extension?color=1d9a82)](https://github.com/bruce-yang-422/clean-url-extension/releases)
+[![網頁版](https://img.shields.io/badge/%E7%B6%B2%E9%A0%81%E7%89%88-cleanlink.stack--base.com-2ec4a5)](https://cleanlink.stack-base.com/)
+![Manifest V3](https://img.shields.io/badge/Manifest-V3-555)
+![No dependencies](https://img.shields.io/badge/dependencies-none-555)
+[![License: MIT](https://img.shields.io/badge/license-MIT-555)](LICENSE)
 
-**[從 Chrome 線上應用程式商店安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)**。也可從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 ZIP 手動安裝。
+一鍵移除網址中的追蹤參數，在本機複製乾淨、簡短的連結。提供 Chrome／Edge 擴充功能與可離線使用的網頁版（PWA），兩者共用同一份清理規則。
 
-目前版本：**v0.2.0**，更新內容見 [GitHub Releases](https://github.com/bruce-yang-422/clean-url-extension/releases)。
+**[安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)** ·
+**[網頁版](https://cleanlink.stack-base.com/)** ·
+**[下載](https://github.com/bruce-yang-422/clean-url-extension/releases)** ·
+**[隱私權政策](https://cleanlink.stack-base.com/privacy.html)**
 
-## 安裝與使用
+```text
+https://shopee.tw/商品名稱-i.123.456?sp_atk=…&utm_source=line   →   https://shopee.tw/product/123/456
+https://youtu.be/abcdefghijk?si=AbCdEf&t=42                       →   https://youtu.be/abcdefghijk?t=42
+https://example.com/article?utm_source=x#intro:~:text=hello       →   https://example.com/article#intro
+```
 
-### 商店安裝（建議）
+## 目錄
 
-1. 使用 Chrome 開啟 [Clean URL｜乾淨連結商店頁面](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)。
-2. 點選「加到 Chrome」，依提示確認安裝。
-3. 開啟一般網頁，點選工具列的 Clean URL 圖示，再按「複製乾淨連結」。可從擴充功能選單將圖示固定在工具列。
-4. 也可以在網頁上按右鍵選「複製此頁的乾淨連結」，或在任一連結上按右鍵選「複製連結的乾淨網址」，不必開啟彈窗。完成時工具列圖示會短暫顯示 ✓。
+- [功能特色](#功能特色)
+- [安裝](#安裝)
+- [使用方式](#使用方式)
+- [清理規則](#清理規則)
+- [權限與隱私](#權限與隱私)
+- [開發](#開發)
+- [專案結構](#專案結構)
+- [授權](#授權)
 
-彈窗中的乾淨連結可以直接編輯，按鈕會複製欄位目前的內容。介面支援繁體中文、簡體中文、英文、日文、韓文、西班牙文與法文，依瀏覽器語言自動切換。
+## 功能特色
 
-Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其他商店的擴充功能後安裝。
+- **通用追蹤清理**：移除 UTM、廣告點擊 ID、電子報與行銷自動化參數，以及 `#:~:text=` 文字醒目標示片段。
+- **網站專屬規則**：針對台灣常見電商與主流社群平台整理網址，例如把蝦皮、酷澎、Amazon 商品網址縮短為商品入口。
+- **不把連結清壞**：保留搜尋條件、商品編號、未知參數與錨點；含雲端儲存簽章的連結整條保留。
+- **右鍵選單**：在網頁或任一連結上按右鍵即可複製乾淨網址，不必開啟彈窗。
+- **可編輯結果**：彈窗中的乾淨連結可先修改再複製。
+- **7 種介面語言**：繁體中文、簡體中文、英文、日文、韓文、西班牙文、法文，依瀏覽器語言自動切換。
+- **網頁版／PWA**：可安裝、可離線使用，Android 可從其他 App 的分享選單直接傳入網址。
+- **完全本機處理**：不設伺服器、不收集資料、不保存瀏覽紀錄，無第三方相依套件。
 
-### ZIP／開發者手動安裝
+## 安裝
 
-從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載擴充功能 ZIP 並解壓縮，或使用本機專案檔案：
+### Chrome 線上應用程式商店（建議）
 
-1. Chrome 開啟 `chrome://extensions`；Edge 開啟 `edge://extensions`。
-2. 開啟「開發人員模式」，選擇「載入未封裝項目」。
-3. 選取本專案資料夾（內含 `manifest.json`）。若使用 ZIP，請先解壓縮。
-4. 開啟一般網頁，點選工具列的 Clean URL 圖示，再按「複製乾淨連結」。可從擴充功能選單將圖示固定在工具列。
+1. 開啟 [Clean URL｜乾淨連結商店頁面](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)，點選「加到 Chrome」。
+2. Edge 使用者可開啟同一頁面，依提示允許來自其他商店的擴充功能後安裝。
 
-開發後按擴充功能管理頁的「重新載入」，再重新開啟彈窗即可。
+### 手動安裝
 
-本機交付的未封裝檔案放在專案根目錄 `unpacked/`；載入時請選取此資料夾。彈窗品牌列會顯示實際執行版本。若清理結果與預期不符，先確認載入目錄與版本，避免使用舊版解壓縮副本。
+1. 從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 `clean-url-extension-v版本.zip` 並解壓縮。
+2. 開啟 `chrome://extensions`（Edge 為 `edge://extensions`），啟用「開發人員模式」。
+3. 選擇「載入未封裝項目」，選取解壓後的資料夾（內含 `manifest.json`）。
 
-## 清理行為
+### 網頁版
 
-- 移除 `utm_*`（名稱不分大小寫）及 `fbclid`、`gclid`、`dclid`、`gbraid`、`wbraid`、`msclkid`、`ttclid`、`twclid`、`igshid`、`mc_cid`、`mc_eid`、`_ga`、`_gl`、`srsltid`、`gad_source`、`gad_campaignid`。Google 購物帶來的 `srsltid` 在任何網站都會移除，例如全聯 PXBox、博客來、生活市集商品頁。
-- 通用清理也涵蓋已知的 Google `gclsrc`、Facebook 來源欄位、Mailchimp `mc_tc`、Marketo `mkt_tok` 及 Matomo 行銷參數；不因名稱含有 `source`、`ref`、`id` 就整批刪除。
-- 其他廣告平台點擊 ID：Yandex `yclid`、`ysclid`，LinkedIn `li_fat_id`，Pinterest `epik`，Impact `irclickid`，CJ `cjevent` 等。
-- 行銷自動化與電子報：HubSpot `_hsenc`、`_hsmi`、`__hs*`、`hsa_*`，Eloqua `elq*`，Klaviyo `_kx`，Vero、Omeda、MailerLite、Blueshift，以及 Adobe `s_cid`、AT Internet `xtor`、`at_*`、Webtrends `wt_mc`、Branch、Adjust 等 App 歸因參數。名單參考 [AdGuard URL Tracking filter](https://github.com/AdguardTeam/AdguardFilters/tree/master/TrackParamFilter)。
-- 移除 `#:~:text=` 文字醒目標示片段；同一片段前方的一般錨點（例如 `#intro`）保留。
-- 社群平台分享參數（只在該平台網域套用）：Facebook `mibextid`、`rdid`、`__cft__`、`__tn__`、`eav`；Instagram `igsh` 等；Threads 貼文 `igsh`；X 貼文 `s`、`t`；YouTube `si`、`pp`、`feature`（保留 `t` 時間點與 `list`）；TikTok `_r`、`_t`、`is_from_webapp`、`sender_device` 等；Reddit `share_id`；LinkedIn `trk*`；Spotify `si`；Bilibili `spm_id_from`、`vd_source` 等。
-- 購物網站：博客來商品頁 `loc`、`sloc`；樂天 `l-id`、`s-id`、`scid`；Yahoo 購物 `co_servername`；Amazon 商品頁縮短為 `/dp/商品編號`，移除 `ref`、`pd_rd_*`、`pf_rd_*` 等，保留 `th`、`psc` 規格；AliExpress、淘寶／天貓的 `spm`、`scm`、`pvid` 等。
-- Google 搜尋結果頁移除 `ved`、`ei`、`sca_esv`、`oq`、`gs_lp` 等，保留 `q`、`tbm` 等搜尋條件。PTT 與 Dcard 文章適用通用清理。
-- 蝦皮台灣站的 `商品名稱-i.賣場ID.商品ID` 網址縮短為 `/product/賣場ID/商品ID`，保留功能參數與片段。酷澎商品路徑亦依下述規則縮短。
-- 蝦皮商品頁移除圖片選取參數 `image_ids`；`extraParams` 若只含有效的 `display_model_id` 及可選的 `model_selection_logic`，會移除以分享純商品入口，不再預選商品規格。若包含其他欄位或格式未知則保留。
-- Threads 的 `threads.com`、`threads.net`（含 `www`）貼文頁 `/@帳號/post/貼文ID` 移除 `xmt`、`slof` 分享附加參數，保留其他功能參數與片段；非貼文頁不套用此規則。
-- 蝦皮分類頁將 `分類名稱-cat.分類ID` 縮短為 `c-cat.分類ID`，保留一至三層完整 ID，以及篩選、排序、分頁參數。搜尋頁與賣場頁保留原路徑及功能參數，只移除已知追蹤參數。
-- 蝦皮賣場頁含 `entryPoint=ShopByPDP` 時，移除此標記及有效數字格式的 `categoryId`、`itemId`，分享純賣場入口，不預選來源商品或分類。未知參數、賣場自訂分類與其他來源標記仍保留。
-- 蝦皮各頁面一律清除 `sp_atk`、`xptdk`、`publish_id`、`uls_trackid`、`incoming_source` 等專屬歸因與來源參數，不套用到其他網站。
-- momo 支援 `/product/商品ID`、`/TP/商店ID/goodsDetail/商品ID` 及舊式 `GoodsDetail.jsp?i_code=商品ID`。保留商品路徑與編號，移除 `osm=Ad數字`、`content=personallist數字`、`mdiv=category` 及空值 `cc1`；未知值與非空分類值保留。
-- momo 活動頁 `/edm/cmmedm.jsp` 帶有有效 `lpn` 時，移除入口參數 `mdiv`；保留 `lpn`、`n`、`ctype` 與未知參數，避免活動頁失效。
-- momo 商品頁帶有 `Area=search` 時，移除搜尋入口資訊：此標記、數字 `mdiv`、位置格式 `oid`、`cid=index`、`kw` 與空值 `ecTagNos`。不將這套規則套用至搜尋頁，也不移除非空活動標記與未知規格參數。
-- momo 商品頁也辨識首頁／分類入口與數字、橫幅格式的 `mdiv`；已知入口位置可移除，未知值保留。來源規則依頁面類型決定，不要求每筆網址恰好帶著相同一組參數。
-- 酷澎台灣商品頁移除數字格式的 `itemId`、`vendorItemId` 及已知廣告歸因、來源與重複商品頁資訊，分享純商品入口，不再固定規格或賣家；未知參數保留。`pid`、`spec`、`src` 等同名參數不會從其他網站刪除。特力屋適用通用 UTM、Google 廣告參數清理。
-- PChome 24h 的 `/prod/商品代碼` 商品頁移除 `?` 與全部查詢參數，包括 `recommend_id`、`prid`、`prt` 及未知參數；保留商品路徑與 `#` 片段。此規則優先於簽章保護，搜尋、分類及商店頁仍只套用通用清理。
-- 酷澎有商品名稱的路徑會縮短為 `/products/商品ID`；商品頁的已知搜尋排序／歸因參數也會清除。只有 `sourceType=search` 或 `CATEGORY` 的來源情境才移除搜尋關鍵字／分類來源，實際搜尋頁的條件保留。
-- momo 品牌搜尋的 `searchType`、`brand`、`brandNo`、`isBrandPage`、`serviceCode`、`_isFuzzy` 會影響搜尋／篩選，預設保留。不把所有長網址強制縮短。
-- 除上述網站專屬規則外，保留商品編號、搜尋條件、未知參數與 `#` 片段。保留剩餘參數的原始順序、重複值及編碼，不重新序列化整段網址。
-- 每次出現的追蹤參數各計為一項；已乾淨的網址維持原樣，仍可複製。
-- 偵測到 `X-Amz-Signature`、`X-Goog-Signature`、`Signature` 或 `sig` 時保留整條連結，避免破壞簽章；PChome 24h 商品頁依上述規則移除全部查詢參數。這不是完整的簽章格式辨識器。
-- 僅支援 HTTP／HTTPS；瀏覽器內部頁面、檔案頁面及其他特殊協定會顯示提示。
-- 不展開短網址、不追蹤轉址、不清理巢狀連結，也不改動目前分頁。
-- 長原始網址會縮略顯示，滑鼠停留可查看完整網址；清理結果可直接編輯，按鈕複製欄位目前的完整內容。
+開啟 [cleanlink.stack-base.com](https://cleanlink.stack-base.com/) 即可使用，也可從瀏覽器選單「安裝應用程式」或「加入主畫面」。第一次連線完成離線準備後，就能離線清理。
+
+## 使用方式
+
+| 方式 | 操作 |
+| --- | --- |
+| 工具列彈窗 | 點選工具列的 Clean URL 圖示，確認或編輯乾淨連結後按「複製乾淨連結」。 |
+| 右鍵選單（頁面） | 在網頁上按右鍵 →「複製此頁的乾淨連結」。完成時圖示短暫顯示 ✓。 |
+| 右鍵選單（連結） | 在任一連結上按右鍵 →「複製連結的乾淨網址」，不必先點開連結。 |
+| 網頁版 | 貼上網址，按「複製乾淨連結」。 |
+| 分享選單（Android） | 安裝 PWA 後，在其他 App 的分享選單選取 Clean URL。 |
+
+介面語言跟隨 Chrome 的顯示語言（`chrome://settings/languages`），更改後重新啟動 Chrome 即可。iPhone／iPad 的 PWA 不支援分享接收，請改用貼上網址。
+
+## 清理規則
+
+### 通用規則
+
+套用於所有網站。參數名稱不分大小寫，名單參考 [AdGuard URL Tracking filter](https://github.com/AdguardTeam/AdguardFilters/tree/master/TrackParamFilter)。
+
+| 類別 | 參數 |
+| --- | --- |
+| UTM | `utm_*` |
+| 廣告點擊 ID | `gclid` `gbraid` `wbraid` `dclid` `gclsrc` `gad_source` `gad_campaignid` `fbclid` `msclkid` `ttclid` `twclid` `igshid` `yclid` `ysclid` `li_fat_id` `epik` `irclickid` 等 |
+| 購物來源 | `srsltid`（Google 購物） |
+| 分析 | `_ga` `_gl` `mtm_*` `pk_*` `piwik_*` `s_cid` `xtor` `at_*` `wt_mc` |
+| 電子報與行銷自動化 | `mc_cid` `mc_eid` `mc_tc` `mkt_tok` `_hsenc` `_hsmi` `__hs*` `hsa_*` `elq*` `_kx` `vero_*` `oly_*` `ml_subscriber*` `bsft_*` |
+| 聯盟行銷與 App 歸因 | `cjevent` `sscid` `tduid` `_branch_*` `adjust_*` `adj_*` |
+| 文字片段 | `#:~:text=…`（保留前方的一般錨點） |
+
+### 網站專屬規則
+
+只在指定網域套用，帶帳密或非標準連接埠的網址不套用。
+
+| 網站 | 規則 |
+| --- | --- |
+| 蝦皮 | 商品網址縮短為 `/product/賣場ID/商品ID`，分類縮短為 `c-cat.分類ID`；移除 `sp_atk` `xptdk` `publish_id` `uls_trackid` `incoming_source`、圖片選取 `image_ids` 與規格預選 `extraParams`；從商品頁進入賣場的 `entryPoint=ShopByPDP` 脈絡也會移除。 |
+| momo | 商品頁移除廣告導流與搜尋入口版位（`osm` `mdiv` `Area` `oid` `cid` `kw` 等已知格式）；活動頁保留 `lpn`；品牌搜尋條件保留。 |
+| PChome 24h | 商品頁 `/prod/…` 移除全部查詢參數（優先於簽章保護）。 |
+| 酷澎 | 商品網址縮短為 `/products/商品ID`，移除規格、賣家與搜尋歸因參數。 |
+| 博客來／樂天／Yahoo 購物 | `loc` `sloc`／`l-id` `s-id` `scid`／`co_servername` |
+| Amazon | 商品網址縮短為 `/dp/商品編號`，移除 `ref` `pd_rd_*` `pf_rd_*` `tag` 等，保留 `th` `psc` 規格。 |
+| AliExpress／淘寶／天貓 | `spm` `scm` `pvid` `algo_pvid` `aff_*` `ali_trackid` 等 |
+| Google 搜尋 | 移除 `ved` `ei` `sca_esv` `oq` `gs_lp` 等，保留 `q` `tbm`。 |
+| Facebook | `mibextid` `rdid` `__cft__` `__tn__` `eav` `paipv` |
+| Instagram／Threads | `igsh` 等；Threads 貼文另移除 `xmt` `slof`。 |
+| X（Twitter） | `s` `ref_src`；貼文頁另移除 `t`。 |
+| YouTube／Spotify | `si` `pp` `feature`；保留時間點 `t` 與播放清單 `list`。 |
+| TikTok／Reddit／LinkedIn／Bilibili | `_r` `_t` `is_from_webapp`／`share_id`／`trk*`／`spm_id_from` `vd_source` 等 |
+
+PTT、Dcard 等其他網站適用通用規則。
+
+### 保留與限制
+
+- 保留剩餘參數的原始順序、重複值與編碼，不重新序列化整段網址；已乾淨的網址維持原樣。
+- 偵測到 `X-Amz-Signature`、`X-Goog-Signature`、`Signature` 或 `sig` 時保留整條連結（PChome 商品頁例外）。這不是完整的簽章格式辨識器。
+- 僅支援 HTTP／HTTPS。不展開短網址、不追蹤轉址、不清理巢狀連結，也不改動目前分頁。
 
 ## 權限與隱私
 
-只要求 `activeTab`（使用者開啟擴充功能時讀取目前分頁網址）、`clipboardWrite`（寫入剪貼簿）、`contextMenus`（右鍵選單）與 `offscreen`（右鍵選單複製時寫入剪貼簿），安裝時不會出現額外的權限警告。背景程式只處理右鍵選單點選事件，不常駐；沒有內容注入、全站存取、分析追蹤或儲存瀏覽紀錄。產品不讀取剪貼簿。詳見 [PRIVACY.md](PRIVACY.md)。
+| 權限 | 用途 |
+| --- | --- |
+| `activeTab` | 開啟彈窗時讀取目前分頁網址。 |
+| `clipboardWrite` | 按下複製時寫入剪貼簿；不讀取剪貼簿內容。 |
+| `contextMenus` | 提供右鍵選單；只在點選時讀取該頁面或連結的網址。 |
+| `offscreen` | 右鍵選單複製時，由不可見的內部頁面寫入剪貼簿。 |
 
-## 開發與驗證
+安裝時不會出現額外的權限警告。沒有內容注入、全站存取、分析追蹤，也不儲存任何網址或瀏覽紀錄。詳見 [隱私權政策](https://cleanlink.stack-base.com/privacy.html)。
 
-### 網頁版與 GitHub Pages
+## 開發
 
-根目錄 `index.html` 為網頁入口，`manifest.webmanifest` 為 PWA 設定，`sw.js` 只快取應用程式靜態資源，不快取輸入的連結。所有資源使用相對路徑，支援自訂網域根目錄與 GitHub Pages 專案子路徑。
+需要 Node.js 22 以上，沒有第三方相依套件，原始碼即執行檔，不需建置步驟。
 
-```powershell
-npm run build:web
-```
-
-輸出 `web-dist/`，只包含網站所需的靜態檔案。可用一般靜態 HTTP 伺服器預覽；離線與安裝功能需要 HTTPS 或 localhost，不支援直接雙擊 HTML 的 `file://` 模式。
-
-GitHub Pages 從 `main` 分支的根目錄發布，入口為 `index.html`，`.nojekyll` 讓檔案直接作為靜態網站提供。儲存庫 Settings → Pages 的 Source 使用「Deploy from a branch」，Branch 選 `main`、`/(root)`。自訂網域為 `cleanlink.stack-base.com`，DNS CNAME 指向 `bruce-yang-422.github.io`，並啟用 HTTPS。相關設定見 [GitHub Pages 官方文件](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site)。
-
-首頁提供搜尋標題與摘要、canonical、Open Graph／Twitter 分享預覽，以及 WebApplication JSON-LD 結構化資料；正式網址統一為 `https://cleanlink.stack-base.com/`。
-
-PWA 使用獨立的 `manifest.webmanifest`，不影響擴充功能的 `manifest.json`。網站建置不包含擴充功能彈窗、測試、腳本或 ICO 原稿。
-
-瀏覽器驗證需先建置網站，然後指定 Chromium：
-
-```powershell
-$env:BROWSER_PATH = 'C:\path\to\chromium\chrome.exe'
-npm run test:web
-```
-
-測試涵蓋貼上／預覽／複製、無效輸入、安裝提示、手機寬度、輸入資料不持久化及停止伺服器後的完整離線重新載入。預設測試 Pages 子路徑；設定 `$env:WEB_BASE_PATH = '/'` 可驗證自訂網域的根路徑。
-
-### 擴充功能
-
-需要 Node.js 22 或更新版本，無第三方 JavaScript 相依套件：
+| 指令 | 說明 |
+| --- | --- |
+| `npm test` | 執行單元與網站矩陣測試。 |
+| `npm run check` | 語法檢查。 |
+| `npm run package` | 測試後產生 `unpacked/` 與 `Release/clean-url-extension-v版本.zip`，並移除舊版 ZIP；不會推送或發布。 |
+| `npm run build:web` | 產生網站靜態檔 `web-dist/`。 |
+| `npm run test:web` | 以真實瀏覽器測試網頁版（需先建置）。 |
 
 ```powershell
 npm test
-npm run check
-```
-
-核心測試使用虛構資料，涵蓋中文、原始編碼、重複與空值參數、長網址、片段、功能參數、簽章及不支援協定。多語系測試確認 7 種語言的介面文字與 `_locales` 皆齊全。
-
-`tests/fixtures/site-matrix.json` 涵蓋 28 個網站／服務與 3 類通用規則，共 68 種頁面情境。矩陣測試對每種類型同時驗證預期結果、通用追蹤清理、簽章保護（含 PChome 商品例外）與重複清理穩定性。瀏覽器整合測試共用同一份矩陣，直接檢查交付版本的預覽與剪貼簿。
-
-更新後使用單一指令產生本機交付檔：
-
-```powershell
 npm run package
+
+# 網頁版瀏覽器測試
+npm run build:web
+$env:BROWSER_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+npm run test:web                             # GitHub Pages 子路徑
+$env:WEB_BASE_PATH = '/'; npm run test:web   # 自訂網域根路徑
 ```
 
-此指令先完成語法與核心測試，再同步 `unpacked/` 與 `Release/clean-url-extension-v版本.zip`，只放入必要執行檔；核對 manifest 與套件版本，移除舊版本 ZIP，不推送或發布。遇到 `unpacked/` 的未知檔案會停止，不擅自刪除。
-
-可選的真實瀏覽器整合測試（需要支援 `--load-extension` 與 CDP `Extensions.triggerAction` 的 Chromium 測試版本；一般版 Chrome 137 起已不支援 `--load-extension`）：
+擴充功能的真實瀏覽器測試 `scripts/browser-check.mjs` 需要支援 `--load-extension` 的 Chromium 測試版本；一般版 Chrome 137 起已不支援。
 
 ```powershell
 $env:BROWSER_PATH = 'C:\path\to\chromium\chrome.exe'
@@ -125,18 +159,35 @@ $env:EXTENSION_PATH = (Resolve-Path unpacked).Path
 node scripts/browser-check.mjs
 ```
 
-此測試使用虛構資料、隔離的暫存設定檔與本機測試頁，透過實際擴充功能按鈕取得 `activeTab` 權限，驗證預覽、編輯後複製、複製結果、複製失敗及重試、乾淨網址、簽章與受限頁面。網站網址由離線攔截頁回應，不讀取真實商品內容，也不產生截圖或瀏覽紀錄。測試會寫入測試連結至系統剪貼簿；剪貼簿讀取權限只由測試工具暫時授予，不在產品權限中。
+### 測試範圍
 
-圖示原稿為 `icons/clean-url.ico`，擴充功能與彈窗使用其中匯出的 16、32、48、128 px PNG，已隨專案提供。
+- 核心測試：中文與原始編碼、重複與空值參數、長網址、片段、簽章與不支援的協定。
+- 網站矩陣 `tests/fixtures/site-matrix.json`：28 個網站／服務與 3 類通用規則，共 68 種情境；每種情境同時驗證預期結果、通用參數清理、簽章保護與重複清理穩定性。
+- 多語系：7 種語言的介面文字與 `_locales` 完整性。
+- PWA：Service Worker 快取範圍、離線載入與分享接收。
 
-## 檔案
+### 部署網頁版
 
-`index.html`、`web.css`、`web.js` 為網頁版；`manifest.webmanifest`、`sw.js` 為 PWA 設定與離線功能；`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為擴充功能彈窗；`background.js`、`offscreen.html`、`offscreen.js` 為右鍵選單與剪貼簿寫入；`i18n.js` 與 `_locales/` 為 7 種語言的介面文字；`url-cleaner.js` 為兩個版本共用的純清理函式；`icons/` 為圖示。
+GitHub Pages 從 `main` 分支根目錄發布（Settings → Pages → Deploy from a branch → `main`／`(root)`），`.nojekyll` 讓檔案直接作為靜態網站提供。自訂網域 `cleanlink.stack-base.com` 以 DNS CNAME 指向 `bruce-yang-422.github.io` 並啟用 HTTPS。所有資源使用相對路徑，也支援 GitHub Pages 專案子路徑。離線與安裝功能需要 HTTPS 或 localhost。
 
-隱私權政策：[cleanlink.stack-base.com/privacy.html](https://cleanlink.stack-base.com/privacy.html)（擴充功能、網頁版與 PWA 共用）。
+## 專案結構
 
-### 從其他 App 分享網址
+```text
+├── url-cleaner.js                 清理核心（擴充功能與網頁版共用）
+├── manifest.json                  擴充功能設定
+├── popup.html / .css / .js        擴充功能彈窗
+├── background.js                  右鍵選單
+├── offscreen.html / .js           右鍵選單的剪貼簿寫入
+├── i18n.js, _locales/             7 種語言介面文字
+├── index.html, web.css, web.js    網頁版
+├── manifest.webmanifest, sw.js    PWA 設定與離線快取
+├── share-target.js                分享接收解析
+├── privacy.html                   隱私權政策
+├── icons/                         圖示（原稿 clean-url.ico）
+├── scripts/                       打包、建置與瀏覽器測試
+└── tests/                         自動化測試
+```
 
-在支援 Web Share Target 的裝置與瀏覽器（例如 Android Chrome）安裝 PWA 後，可在其他 App 的分享選單選取 Clean URL，自動填入原始網址並產生清理結果，再按「複製乾淨連結」。分享的文字包含網址時也能辨識。iPhone／iPad 的 PWA 目前不支援此分享接收方式，可改用貼上網址。
+## 授權
 
-若舊版安裝尚未出現在分享選單，請先連線開啟網站更新；仍未出現時可移除後重新安裝 PWA。分享內容以 POST 交由本機 Service Worker 接收，直接由本機回傳介面並填入網址，不將分享內容放入網址列、傳送至網站伺服器或儲存於離線快取與清理歷史。
+本專案採用 [MIT 授權條款](LICENSE)。您可以自由使用、修改與散布，惟須保留原始的著作權聲明與授權條款。
