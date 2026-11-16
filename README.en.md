@@ -1,3 +1,5 @@
+![Clean URL — remove tracking parameters and share clean links locally](store-assets/readme-banner.png)
+
 # Clean URL｜乾淨連結
 
 [繁體中文](README.md) | **English**

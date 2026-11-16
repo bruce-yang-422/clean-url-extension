@@ -1,3 +1,5 @@
+![Clean URL｜乾淨連結：移除追蹤參數，在本機分享乾淨連結](store-assets/readme-banner.png)
+
 # Clean URL｜乾淨連結
 
 **繁體中文** | [English](README.en.md)
