@@ -133,7 +133,7 @@ node scripts/browser-check.mjs
 
 `index.html`、`web.css`、`web.js` 為網頁版；`manifest.webmanifest`、`sw.js` 為 PWA 設定與離線功能；`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為擴充功能彈窗；`background.js`、`offscreen.html`、`offscreen.js` 為右鍵選單與剪貼簿寫入；`i18n.js` 與 `_locales/` 為 7 種語言的介面文字；`url-cleaner.js` 為兩個版本共用的純清理函式；`icons/` 為圖示。
 
-隱私權政策： https://cleanlink.stack-base.com/privacy.html （擴充功能、網頁版與 PWA 共用；可填入 Chrome Web Store 開發者後台）。
+隱私權政策：[cleanlink.stack-base.com/privacy.html](https://cleanlink.stack-base.com/privacy.html)（擴充功能、網頁版與 PWA 共用）。
 
 ### 從其他 App 分享網址
 

@@ -10,8 +10,4 @@
 
 首頁的搜尋中繼資料、社群分享預覽與結構化資料僅描述工具本身，不包含使用者輸入的網址，也未加入分析追蹤程式。網址清理規則更新不增加資料收集；介面多語系依瀏覽器語言顯示，不額外讀取或儲存任何資料。
 
-Chrome Web Store 開發者後台的隱私權政策網址欄位請填入：
-
-https://cleanlink.stack-base.com/privacy.html
-
 如有疑問，請至[專案支援頁面](https://github.com/bruce-yang-422/clean-url-extension/issues)聯絡開發者。
