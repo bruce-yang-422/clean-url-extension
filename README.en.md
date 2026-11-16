@@ -85,7 +85,7 @@ Applied to every site. Parameter names are case-insensitive; the list is informe
 | --- | --- |
 | UTM | `utm_*` |
 | Ad click IDs | `gclid` `gbraid` `wbraid` `dclid` `gclsrc` `gad_source` `gad_campaignid` `fbclid` `msclkid` `ttclid` `twclid` `igshid` `yclid` `ysclid` `li_fat_id` `epik` `irclickid` and more |
-| Shopping source | `srsltid` (Google Shopping) |
+| LINE user ID | `luid` (when the value is a LINE user ID) `line_uid` |
 | Analytics | `_ga` `_gl` `mtm_*` `pk_*` `piwik_*` `s_cid` `xtor` `at_*` `wt_mc` |
 | Email & marketing automation | `mc_cid` `mc_eid` `mc_tc` `mkt_tok` `_hsenc` `_hsmi` `__hs*` `hsa_*` `elq*` `_kx` `vero_*` `oly_*` `ml_subscriber*` `bsft_*` |
 | Affiliate & app attribution | `cjevent` `sscid` `tduid` `_branch_*` `adjust_*` `adj_*` |
@@ -164,7 +164,7 @@ node scripts/browser-check.mjs
 ### Test coverage
 
 - Core: Unicode and raw encoding, duplicate and empty parameters, long URLs, fragments, signatures and unsupported schemes.
-- Site matrix `tests/fixtures/site-matrix.json`: 28 sites/services plus 3 general categories, 68 scenarios, each checked for the expected result, general cleanup, signature protection and idempotence.
+- Site matrix `tests/fixtures/site-matrix.json`: 29 sites/services plus 4 general categories, 70 scenarios, each checked for the expected result, general cleanup, signature protection and idempotence.
 - i18n: completeness of UI strings and `_locales` for all 7 languages.
 - PWA: service-worker cache scope, offline reload and share target.
 

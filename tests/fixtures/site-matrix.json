@@ -46,6 +46,8 @@
   ["Amazon／搜尋保留條件", "https://www.amazon.co.jp/s?k=tea&crid=ABC&sprefix=te&ref=nb_sb_noss&pd_rd_r=x", "https://www.amazon.co.jp/s?k=tea&crid=ABC&sprefix=te&ref=nb_sb_noss", 1],
   ["AliExpress／商品保留規格", "https://www.aliexpress.com/item/100500.html?spm=a2g0o&algo_pvid=abc&pdp_ext_f=x&sku_id=1", "https://www.aliexpress.com/item/100500.html?sku_id=1", 3],
   ["淘寶／商品保留 ID 與規格", "https://item.taobao.com/item.htm?id=123&spm=a1z&ali_trackid=x&skuId=9", "https://item.taobao.com/item.htm?id=123&skuId=9", 2],
+  ["經理人／LINE 使用者 ID", "https://www.managertoday.com.tw/articles/view/73335?luid=U9a8763eafe2ff799a8d4472e73bfc4e8", "https://www.managertoday.com.tw/articles/view/73335", 1],
+  ["LINE 使用者 ID／非該格式保留", "https://example.com/?luid=keep&line_uid=U0&page=2", "https://example.com/?luid=keep&page=2", 1],
   ["PTT／文章", "https://www.ptt.cc/bbs/Gossiping/M.1700000000.A.ABC.html?fbclid=IwAR0abc", "https://www.ptt.cc/bbs/Gossiping/M.1700000000.A.ABC.html", 1],
   ["Dcard／App 分享", "https://www.dcard.tw/f/mood/p/255000000?utm_source=android_app&utm_medium=share&utm_campaign=post", "https://www.dcard.tw/f/mood/p/255000000", 3],
   ["Threads／IG 分享參數", "https://www.threads.net/@user/post/abc?igsh=MTIz", "https://www.threads.net/@user/post/abc", 1],

@@ -86,6 +86,7 @@ https://example.com/article?utm_source=x#intro:~:text=hello       →   https://
 | UTM | `utm_*` |
 | 廣告點擊 ID | `gclid` `gbraid` `wbraid` `dclid` `gclsrc` `gad_source` `gad_campaignid` `fbclid` `msclkid` `ttclid` `twclid` `igshid` `yclid` `ysclid` `li_fat_id` `epik` `irclickid` 等 |
 | 購物來源 | `srsltid`（Google 購物） |
+| LINE 使用者 ID | `luid`（值為 LINE 使用者 ID 格式時）`line_uid` |
 | 分析 | `_ga` `_gl` `mtm_*` `pk_*` `piwik_*` `s_cid` `xtor` `at_*` `wt_mc` |
 | 電子報與行銷自動化 | `mc_cid` `mc_eid` `mc_tc` `mkt_tok` `_hsenc` `_hsmi` `__hs*` `hsa_*` `elq*` `_kx` `vero_*` `oly_*` `ml_subscriber*` `bsft_*` |
 | 聯盟行銷與 App 歸因 | `cjevent` `sscid` `tduid` `_branch_*` `adjust_*` `adj_*` |
@@ -164,7 +165,7 @@ node scripts/browser-check.mjs
 ### 測試範圍
 
 - 核心測試：中文與原始編碼、重複與空值參數、長網址、片段、簽章與不支援的協定。
-- 網站矩陣 `tests/fixtures/site-matrix.json`：28 個網站／服務與 3 類通用規則，共 68 種情境；每種情境同時驗證預期結果、通用參數清理、簽章保護與重複清理穩定性。
+- 網站矩陣 `tests/fixtures/site-matrix.json`：29 個網站／服務與 4 類通用規則，共 70 種情境；每種情境同時驗證預期結果、通用參數清理、簽章保護與重複清理穩定性。
 - 多語系：7 種語言的介面文字與 `_locales` 完整性。
 - PWA：Service Worker 快取範圍、離線載入與分享接收。
 

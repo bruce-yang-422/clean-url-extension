@@ -5,7 +5,7 @@ const TRACKING_PARAMETERS = new Set([
   // 廣告點擊 ID
   "fbclid", "gclid", "dclid", "gbraid", "wbraid", "msclkid", "yclid", "ysclid",
   "ttclid", "twclid", "igshid", "li_fat_id", "epik", "rb_clickid", "irclickid", "irgwc",
-  "srsltid", "gad_source", "gad_campaignid", "gclsrc", "fbadid", "wickedid",
+  "srsltid", "gad_source", "gad_campaignid", "gclsrc", "fbadid", "wickedid", "line_uid",
   // Google Analytics、Facebook、Twitter 分享
   "_ga", "_gl", "fb_source", "fb_ref", "fb_action_ids", "fb_action_types",
   "action_object_map", "action_ref_map", "action_type_map", "__twitter_impression",
@@ -36,6 +36,8 @@ const TRACKING_PARAMETERS = new Set([
 ]);
 // 名稱以下列前綴開頭時視為追蹤參數（utm_* 與 HubSpot 廣告 hsa_*）。
 const TRACKING_PREFIXES = ["utm_", "hsa_"];
+// LINE 官方帳號訊息附加的使用者 ID（U + 32 位十六進位）；名稱過短，僅在值符合格式時移除。
+const LINE_USER_ID = /^U[0-9a-f]{32}$/i;
 // incoming_source 為站內來源標記（例如 dd＝每日新發現），不影響頁面內容。
 const SHOPEE_TRACKING_PARAMETERS = new Set(["sp_atk", "xptdk", "publish_id", "uls_trackid", "incoming_source"]);
 const SIGNATURE_PARAMETERS = new Set([
@@ -198,7 +200,8 @@ export function cleanUrl(input) {
     && (!rule.path || rule.path.test(parsed.pathname))) : [];
   // 逐項判斷並統計移除數量；保留的參數沿用原始編碼與順序。
   const retained = entries.filter(({ name, value }) => {
-    const tracking = TRACKING_PARAMETERS.has(name) || TRACKING_PREFIXES.some(prefix => name.startsWith(prefix));
+    const tracking = TRACKING_PARAMETERS.has(name) || TRACKING_PREFIXES.some(prefix => name.startsWith(prefix))
+      || (name === "luid" && LINE_USER_ID.test(value));
     // 分享蝦皮商品時移除圖片選取及預選規格；規格包裝含未知欄位則保留。
     const selection = shopeeProduct && ((name === "extraparams" && isDisplayModelSelection(value))
       || name === "image_ids");
