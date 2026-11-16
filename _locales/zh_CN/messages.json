@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Clean URL｜干净链接"
+  },
+  "extDescription": {
+    "message": "一键移除已知网址跟踪参数，在本地复制干净链接。"
+  },
+  "actionTitle": {
+    "message": "Clean URL｜复制干净链接"
+  }
+}

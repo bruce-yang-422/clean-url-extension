@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fffef7">
   <!-- 搜尋摘要與標準網址：統一指向正式首頁。 -->
-  <meta name="description" content="Clean URL 免費網址清理工具，一鍵移除 UTM 等追蹤參數，整理蝦皮、momo、PChome 與酷澎商品連結。網址在裝置本機處理，不保留清理紀錄，可安裝並離線使用。">
+  <meta name="description" content="Clean URL 免費網址清理工具，一鍵移除 UTM 等追蹤參數，整理蝦皮、momo、PChome、酷澎、博客來等購物連結，以及 Facebook、Instagram、Threads、YouTube 分享連結。網址在裝置本機處理，不保留清理紀錄，可安裝並離線使用。">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://cleanlink.stack-base.com/">
   <meta property="og:url" content="https://cleanlink.stack-base.com/">
@@ -21,7 +21,7 @@
   <meta property="og:image:alt" content="Clean URL 乾淨連結應用程式圖示">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Clean URL｜免費網址清理工具・移除 UTM 追蹤參數">
-  <meta name="twitter:description" content="一鍵清理追蹤參數與購物商品連結，在本機處理、不保留紀錄，可離線使用。">
+  <meta name="twitter:description" content="一鍵清理追蹤參數、購物商品與社群分享連結，在本機處理、不保留紀錄，可離線使用。">
   <meta name="twitter:image" content="https://cleanlink.stack-base.com/icons/pwa-512.png">
   <meta name="twitter:image:alt" content="Clean URL 乾淨連結應用程式圖示">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -43,7 +43,7 @@
     "isAccessibleForFree": true,
     "image": "https://cleanlink.stack-base.com/icons/pwa-512.png",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TWD" },
-    "featureList": ["移除 UTM 等已知追蹤參數", "整理常見台灣購物網站連結", "本機處理，不保留清理紀錄", "安裝後離線使用"]
+    "featureList": ["移除 UTM 等已知追蹤參數", "整理常見購物網站與社群分享連結", "本機處理，不保留清理紀錄", "安裝後離線使用"]
   }
   </script>
   <link rel="icon" type="image/png" href="./icons/icon-32.png">
@@ -56,7 +56,7 @@
   <header class="site-header">
     <a class="brand" href="./" aria-label="Clean URL 首頁"><img src="./icons/icon-128.png" width="40" height="40" alt=""><span>Clean URL<small>乾淨連結</small></span></a>
     <nav aria-label="主要導覽">
-      <a class="extension-link" href="https://github.com/bruce-yang-422/clean-url-extension/releases" target="_blank" rel="noopener noreferrer">瀏覽器擴充功能 <span aria-hidden="true">↗</span></a>
+      <a class="extension-link" href="https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka" target="_blank" rel="noopener noreferrer">瀏覽器擴充功能 <span aria-hidden="true">↗</span></a>
       <button id="install-button" class="button button-outline" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg>安裝到裝置</button>
     </nav>
   </header>
@@ -85,11 +85,11 @@
     <div class="trust-row"><span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6z"/><path d="m8 12 3 3 5-6"/></svg>不傳送你貼上的網址</span><span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 8-8M4 4v6h6m-6 0 6-6"/></svg>不保留清理紀錄</span><span id="offline-state"><span class="connection-dot" aria-hidden="true"></span><span id="offline-label">本機清理</span></span></div>
 
     <section class="about" aria-labelledby="about-title">
-      <div><h2 id="about-title">熟悉的網站，一樣好分享。</h2><p>通用追蹤清理，加上常見台灣購物網站的專屬規則。</p></div>
-      <ul class="site-list" aria-label="常見支援網站"><li>蝦皮購物</li><li>momo</li><li>PChome</li><li>酷澎</li><li>特力屋</li><li>Threads</li><li>更多網站</li></ul>
+      <div><h2 id="about-title">熟悉的網站，一樣好分享。</h2><p>通用廣告與行銷追蹤清理，加上購物網站與社群平台的專屬規則。</p></div>
+      <ul class="site-list" aria-label="常見支援網站"><li>蝦皮購物</li><li>momo</li><li>PChome</li><li>酷澎</li><li>特力屋</li><li>博客來</li><li>樂天</li><li>Yahoo 購物</li><li>Amazon</li><li>淘寶</li><li>Facebook</li><li>Instagram</li><li>Threads</li><li>YouTube</li><li>X</li><li>TikTok</li><li>PTT</li><li>Dcard</li><li>更多網站</li></ul>
     </section>
 
-    <details class="notes"><summary>哪些會清理，哪些會留下？<span aria-hidden="true">＋</span></summary><div><p>移除 UTM 等已知追蹤參數，並依支援的網站規則整理商品、分類與來源連結。搜尋條件、活動識別碼與未知參數預設保留；PChome 24h 商品頁會移除全部查詢參數，其餘簽章連結保持原樣。</p><p>蝦皮與酷澎的商品連結會整理成商品入口，不一定保留原先選取的規格或賣家。蝦皮商品圖片選取參數，以及 Threads 貼文的 xmt、slof 分享參數也會移除。短網址不會自動展開。</p></div></details>
+    <details class="notes"><summary>哪些會清理，哪些會留下？<span aria-hidden="true">＋</span></summary><div><p>移除 UTM 等已知追蹤參數，並依支援的網站規則整理商品、分類與來源連結。搜尋條件、活動識別碼與未知參數預設保留；PChome 24h 商品頁會移除全部查詢參數，其餘簽章連結保持原樣。</p><p>蝦皮與酷澎的商品連結會整理成商品入口，不一定保留原先選取的規格或賣家。蝦皮商品圖片選取參數，Facebook、Instagram、Threads、YouTube、X、TikTok 的分享追蹤參數，以及 #:~:text= 文字醒目標示片段也會移除。短網址不會自動展開。</p><p>常在電腦上分享？<a href="https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka" target="_blank" rel="noopener noreferrer">Chrome 擴充功能</a>可在網頁或連結上按右鍵直接複製乾淨連結，介面支援 7 種語言。</p></div></details>
     <noscript><p class="noscript">請啟用 JavaScript，才能在本機清理網址。</p></noscript>
   </main>
 

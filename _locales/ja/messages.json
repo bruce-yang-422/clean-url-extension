@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Clean URL"
+  },
+  "extDescription": {
+    "message": "既知のトラッキングパラメータを削除し、クリーンなリンクをローカルでコピーします。"
+  },
+  "actionTitle": {
+    "message": "Clean URL｜クリーンなリンクをコピー"
+  }
+}

@@ -9,13 +9,17 @@ svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width:
 h1 { margin: 0; font-size: 15px; line-height: 1.25; letter-spacing: -.3px; }
 .brand-title { display: flex; align-items: baseline; gap: 6px; }
 .version { color: #75837c; font-size: 10px; white-space: nowrap; }
-.brand-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 4px 9px; border: 1px solid #d2ede6; border-radius: 99px; background: #e6f6f2; color: #237a67; font-size: 11px; }
-.brand-badge > span { width: 6px; height: 6px; border-radius: 50%; background: #2ec4a5; }
+.brand-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 4px 9px; border: 1px solid #d2ede6; border-radius: 99px; background: #e6f6f2; color: #237a67; font-size: 11px; white-space: nowrap; }
+.brand-badge > .badge-dot { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #2ec4a5; }
 .card { margin-bottom: 14px; }
 h2 { display: flex; align-items: center; gap: 6px; margin: 0 4px 8px; color: #75837c; font-size: 11px; letter-spacing: .6px; font-weight: 600; }
 .url { margin: 0; padding: 12px 14px; border: 1px solid #ede9e0; border-radius: 14px; background: white; color: #5f706b; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; max-height: 104px; overflow-y: auto; user-select: text; scrollbar-width: thin; }
 .clean-card h2 { color: #2d3530; }
 .clean-card .url { border-color: #c8e8dd; background: #eaf6f1; color: #2d3530; }
+/* 可編輯的乾淨連結欄位沿用卡片外觀。 */
+textarea.url { display: block; width: 100%; min-height: 76px; resize: vertical; font: inherit; font-size: 12px; }
+textarea.url:focus { outline: none; border-color: #69c8b0; box-shadow: 0 0 0 3px #2ec4a51f; }
+.hint { margin: 6px 4px 0; color: #8a978e; font-size: 10px; }
 .ready-badge { padding: 2px 6px; border-radius: 99px; background: #e6f6f2; color: #237a67; font-size: 9px; letter-spacing: .4px; }
 .status { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 12px 14px; border: 1px solid #e0e8e3; background: white; border-radius: 14px; color: #5f706b; font-size: 12px; line-height: 1.6; }
 .status-icon { display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #f0ebe0; color: #687870; font-size: 14px; font-weight: 700; }

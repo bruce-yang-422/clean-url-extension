@@ -6,7 +6,7 @@
 
 **[從 Chrome 線上應用程式商店安裝擴充功能](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)**。也可從 [Releases](https://github.com/bruce-yang-422/clean-url-extension/releases) 下載 ZIP 手動安裝。
 
-目前版本：**v0.1.14**，更新內容見 [版本紀錄](GitHub_Release_v0.1.14.md)。
+目前版本：**v0.2.0**，更新內容見 [版本紀錄](GitHub_Release_v0.2.0.md)。
 
 ## 安裝與使用
 
@@ -15,6 +15,9 @@
 1. 使用 Chrome 開啟 [Clean URL｜乾淨連結商店頁面](https://chromewebstore.google.com/detail/clean-url%EF%BD%9C%E4%B9%BE%E6%B7%A8%E9%80%A3%E7%B5%90/ecfnblelamnokaknaepkjbhbckmakkka)。
 2. 點選「加到 Chrome」，依提示確認安裝。
 3. 開啟一般網頁，點選工具列的 Clean URL 圖示，再按「複製乾淨連結」。可從擴充功能選單將圖示固定在工具列。
+4. 也可以在網頁上按右鍵選「複製此頁的乾淨連結」，或在任一連結上按右鍵選「複製連結的乾淨網址」，不必開啟彈窗。完成時工具列圖示會短暫顯示 ✓。
+
+彈窗中的乾淨連結可以直接編輯，按鈕會複製欄位目前的內容。介面支援繁體中文、簡體中文、英文、日文、韓文、西班牙文與法文，依瀏覽器語言自動切換。
 
 Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其他商店的擴充功能後安裝。
 
@@ -33,14 +36,20 @@ Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其
 
 ## 清理行為
 
-- 移除 `utm_*`（名稱不分大小寫）及 `fbclid`、`gclid`、`dclid`、`gbraid`、`wbraid`、`msclkid`、`ttclid`、`twclid`、`igshid`、`mc_cid`、`mc_eid`、`_ga`、`_gl`、`srsltid`、`gad_source`、`gad_campaignid`。
+- 移除 `utm_*`（名稱不分大小寫）及 `fbclid`、`gclid`、`dclid`、`gbraid`、`wbraid`、`msclkid`、`ttclid`、`twclid`、`igshid`、`mc_cid`、`mc_eid`、`_ga`、`_gl`、`srsltid`、`gad_source`、`gad_campaignid`。Google 購物帶來的 `srsltid` 在任何網站都會移除，例如全聯 PXBox、博客來、生活市集商品頁。
 - 通用清理也涵蓋已知的 Google `gclsrc`、Facebook 來源欄位、Mailchimp `mc_tc`、Marketo `mkt_tok` 及 Matomo 行銷參數；不因名稱含有 `source`、`ref`、`id` 就整批刪除。
+- 其他廣告平台點擊 ID：Yandex `yclid`、`ysclid`，LinkedIn `li_fat_id`，Pinterest `epik`，Impact `irclickid`，CJ `cjevent` 等。
+- 行銷自動化與電子報：HubSpot `_hsenc`、`_hsmi`、`__hs*`、`hsa_*`，Eloqua `elq*`，Klaviyo `_kx`，Vero、Omeda、MailerLite、Blueshift，以及 Adobe `s_cid`、AT Internet `xtor`、`at_*`、Webtrends `wt_mc`、Branch、Adjust 等 App 歸因參數。名單參考 [AdGuard URL Tracking filter](https://github.com/AdguardTeam/AdguardFilters/tree/master/TrackParamFilter)。
+- 移除 `#:~:text=` 文字醒目標示片段；同一片段前方的一般錨點（例如 `#intro`）保留。
+- 社群平台分享參數（只在該平台網域套用）：Facebook `mibextid`、`rdid`、`__cft__`、`__tn__`、`eav`；Instagram `igsh` 等；Threads 貼文 `igsh`；X 貼文 `s`、`t`；YouTube `si`、`pp`、`feature`（保留 `t` 時間點與 `list`）；TikTok `_r`、`_t`、`is_from_webapp`、`sender_device` 等；Reddit `share_id`；LinkedIn `trk*`；Spotify `si`；Bilibili `spm_id_from`、`vd_source` 等。
+- 購物網站：博客來商品頁 `loc`、`sloc`；樂天 `l-id`、`s-id`、`scid`；Yahoo 購物 `co_servername`；Amazon 商品頁縮短為 `/dp/商品編號`，移除 `ref`、`pd_rd_*`、`pf_rd_*` 等，保留 `th`、`psc` 規格；AliExpress、淘寶／天貓的 `spm`、`scm`、`pvid` 等。
+- Google 搜尋結果頁移除 `ved`、`ei`、`sca_esv`、`oq`、`gs_lp` 等，保留 `q`、`tbm` 等搜尋條件。PTT 與 Dcard 文章適用通用清理。
 - 蝦皮台灣站的 `商品名稱-i.賣場ID.商品ID` 網址縮短為 `/product/賣場ID/商品ID`，保留功能參數與片段。酷澎商品路徑亦依下述規則縮短。
 - 蝦皮商品頁移除圖片選取參數 `image_ids`；`extraParams` 若只含有效的 `display_model_id` 及可選的 `model_selection_logic`，會移除以分享純商品入口，不再預選商品規格。若包含其他欄位或格式未知則保留。
 - Threads 的 `threads.com`、`threads.net`（含 `www`）貼文頁 `/@帳號/post/貼文ID` 移除 `xmt`、`slof` 分享附加參數，保留其他功能參數與片段；非貼文頁不套用此規則。
 - 蝦皮分類頁將 `分類名稱-cat.分類ID` 縮短為 `c-cat.分類ID`，保留一至三層完整 ID，以及篩選、排序、分頁參數。搜尋頁與賣場頁保留原路徑及功能參數，只移除已知追蹤參數。
 - 蝦皮賣場頁含 `entryPoint=ShopByPDP` 時，移除此標記及有效數字格式的 `categoryId`、`itemId`，分享純賣場入口，不預選來源商品或分類。未知參數、賣場自訂分類與其他來源標記仍保留。
-- 蝦皮各頁面一律清除 `sp_atk`、`xptdk`、`publish_id`、`uls_trackid` 等專屬歸因參數，不套用到其他網站。
+- 蝦皮各頁面一律清除 `sp_atk`、`xptdk`、`publish_id`、`uls_trackid`、`incoming_source` 等專屬歸因與來源參數，不套用到其他網站。
 - momo 支援 `/product/商品ID`、`/TP/商店ID/goodsDetail/商品ID` 及舊式 `GoodsDetail.jsp?i_code=商品ID`。保留商品路徑與編號，移除 `osm=Ad數字`、`content=personallist數字`、`mdiv=category` 及空值 `cc1`；未知值與非空分類值保留。
 - momo 活動頁 `/edm/cmmedm.jsp` 帶有有效 `lpn` 時，移除入口參數 `mdiv`；保留 `lpn`、`n`、`ctype` 與未知參數，避免活動頁失效。
 - momo 商品頁帶有 `Area=search` 時，移除搜尋入口資訊：此標記、數字 `mdiv`、位置格式 `oid`、`cid=index`、`kw` 與空值 `ecTagNos`。不將這套規則套用至搜尋頁，也不移除非空活動標記與未知規格參數。
@@ -54,11 +63,11 @@ Edge 使用者也可開啟上述商店頁面，依瀏覽器提示允許來自其
 - 偵測到 `X-Amz-Signature`、`X-Goog-Signature`、`Signature` 或 `sig` 時保留整條連結，避免破壞簽章；PChome 24h 商品頁依上述規則移除全部查詢參數。這不是完整的簽章格式辨識器。
 - 僅支援 HTTP／HTTPS；瀏覽器內部頁面、檔案頁面及其他特殊協定會顯示提示。
 - 不展開短網址、不追蹤轉址、不清理巢狀連結，也不改動目前分頁。
-- 長原始網址會縮略顯示，滑鼠停留可查看完整網址；清理結果可捲動、選取並手動複製，按鈕永遠複製完整結果。
+- 長原始網址會縮略顯示，滑鼠停留可查看完整網址；清理結果可直接編輯，按鈕複製欄位目前的完整內容。
 
 ## 權限與隱私
 
-只要求 `activeTab`（使用者開啟擴充功能時讀取目前分頁網址）與 `clipboardWrite`（按鈕寫入剪貼簿）。沒有常駐背景程式、內容注入、全站存取、分析追蹤或儲存瀏覽紀錄。產品不讀取剪貼簿。詳見 [PRIVACY.md](PRIVACY.md)。
+只要求 `activeTab`（使用者開啟擴充功能時讀取目前分頁網址）、`clipboardWrite`（寫入剪貼簿）、`contextMenus`（右鍵選單）與 `offscreen`（右鍵選單複製時寫入剪貼簿），安裝時不會出現額外的權限警告。背景程式只處理右鍵選單點選事件，不常駐；沒有內容注入、全站存取、分析追蹤或儲存瀏覽紀錄。產品不讀取剪貼簿。詳見 [PRIVACY.md](PRIVACY.md)。
 
 ## 開發與驗證
 
@@ -96,9 +105,9 @@ npm test
 npm run check
 ```
 
-核心測試使用虛構資料，涵蓋中文、原始編碼、重複與空值參數、長網址、片段、功能參數、簽章及不支援協定。
+核心測試使用虛構資料，涵蓋中文、原始編碼、重複與空值參數、長網址、片段、功能參數、簽章及不支援協定。多語系測試確認 7 種語言的介面文字與 `_locales` 皆齊全。
 
-`tests/fixtures/site-matrix.json` 涵蓋 8 個網站／服務、30 種頁面情境。矩陣測試對每種類型同時驗證預期結果、通用追蹤清理、簽章保護（含 PChome 商品例外）與重複清理穩定性。瀏覽器整合測試共用同一份矩陣，直接檢查交付版本的預覽與剪貼簿。
+`tests/fixtures/site-matrix.json` 涵蓋 28 個網站／服務與 3 類通用規則，共 68 種頁面情境。矩陣測試對每種類型同時驗證預期結果、通用追蹤清理、簽章保護（含 PChome 商品例外）與重複清理穩定性。瀏覽器整合測試共用同一份矩陣，直接檢查交付版本的預覽與剪貼簿。
 
 更新後使用單一指令產生本機交付檔：
 
@@ -108,7 +117,7 @@ npm run package
 
 此指令先完成語法與核心測試，再同步 `unpacked/` 與 `Release/clean-url-extension-v版本.zip`，只放入必要執行檔；核對 manifest 與套件版本，移除舊版本 ZIP，不推送或發布。遇到 `unpacked/` 的未知檔案會停止，不擅自刪除。
 
-可選的真實瀏覽器整合測試（需要支援 `--load-extension` 與 CDP `Extensions.triggerAction` 的 Chromium 測試版本）：
+可選的真實瀏覽器整合測試（需要支援 `--load-extension` 與 CDP `Extensions.triggerAction` 的 Chromium 測試版本；一般版 Chrome 137 起已不支援 `--load-extension`）：
 
 ```powershell
 $env:BROWSER_PATH = 'C:\path\to\chromium\chrome.exe'
@@ -116,13 +125,13 @@ $env:EXTENSION_PATH = (Resolve-Path unpacked).Path
 node scripts/browser-check.mjs
 ```
 
-此測試使用虛構資料、隔離的暫存設定檔與本機測試頁，透過實際擴充功能按鈕取得 `activeTab` 權限，驗證預覽、複製結果、複製失敗及重試、乾淨網址、簽章與受限頁面。網站網址由離線攔截頁回應，不讀取真實商品內容，也不產生截圖或瀏覽紀錄。測試會寫入測試連結至系統剪貼簿；剪貼簿讀取權限只由測試工具暫時授予，不在產品權限中。
+此測試使用虛構資料、隔離的暫存設定檔與本機測試頁，透過實際擴充功能按鈕取得 `activeTab` 權限，驗證預覽、編輯後複製、複製結果、複製失敗及重試、乾淨網址、簽章與受限頁面。網站網址由離線攔截頁回應，不讀取真實商品內容，也不產生截圖或瀏覽紀錄。測試會寫入測試連結至系統剪貼簿；剪貼簿讀取權限只由測試工具暫時授予，不在產品權限中。
 
 圖示原稿為 `icons/clean-url.ico`，擴充功能與彈窗使用其中匯出的 16、32、48、128 px PNG，已隨專案提供。
 
 ## 檔案
 
-`index.html`、`web.css`、`web.js` 為網頁版；`manifest.webmanifest`、`sw.js` 為 PWA 設定與離線功能；`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為擴充功能彈窗；`url-cleaner.js` 為兩個版本共用的純清理函式；`icons/` 為圖示。
+`index.html`、`web.css`、`web.js` 為網頁版；`manifest.webmanifest`、`sw.js` 為 PWA 設定與離線功能；`manifest.json` 為擴充功能設定；`popup.html`、`popup.css`、`popup.js` 為擴充功能彈窗；`background.js`、`offscreen.html`、`offscreen.js` 為右鍵選單與剪貼簿寫入；`i18n.js` 與 `_locales/` 為 7 種語言的介面文字；`url-cleaner.js` 為兩個版本共用的純清理函式；`icons/` 為圖示。
 
 隱私權政策： https://cleanlink.stack-base.com/privacy.html （擴充功能、網頁版與 PWA 共用；可填入 Chrome Web Store 開發者後台）。
 

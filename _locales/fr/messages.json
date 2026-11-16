@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Clean URL"
+  },
+  "extDescription": {
+    "message": "Supprime les paramètres de suivi connus et copie un lien propre, en local."
+  },
+  "actionTitle": {
+    "message": "Clean URL | Copier le lien propre"
+  }
+}

@@ -1,4 +1,5 @@
 import { cleanUrl } from "./url-cleaner.js";
+import { t, localize } from "./i18n.js";
 
 const original = document.getElementById("original-url");
 const cleaned = document.getElementById("clean-url");
@@ -7,42 +8,46 @@ const statusText = document.getElementById("status-text");
 const button = document.getElementById("copy-button");
 const copyLabel = document.getElementById("copy-label");
 const feedback = document.getElementById("copy-feedback");
-let cleanedUrl = null;
 let feedbackTimer;
 
-function showUrl(element, value) {
-  element.textContent = element === original && value.length > 90
-    ? `${value.slice(0, 45)}…${value.slice(-32)}`
-    : value;
-  element.title = value;
-  element.setAttribute("aria-label", value);
-  element.tabIndex = 0;
-  element.scrollTop = 0;
+localize();
+
+function showOriginal(value) {
+  original.textContent = value.length > 90 ? `${value.slice(0, 45)}…${value.slice(-32)}` : value;
+  original.title = value;
+  original.setAttribute("aria-label", value);
+  original.tabIndex = 0;
 }
 
+// 清理結果可直接編輯；內容清空時停用複製按鈕。
+cleaned.addEventListener("input", () => {
+  button.disabled = !cleaned.value.trim();
+});
+
 button.addEventListener("click", async () => {
-  if (!cleanedUrl) return;
+  const value = cleaned.value.trim();
+  if (!value) return;
   button.disabled = true;
   clearTimeout(feedbackTimer);
   button.classList.remove("copied");
   feedback.textContent = "";
   feedback.className = "";
   try {
-    await navigator.clipboard.writeText(cleanedUrl);
-    copyLabel.textContent = "已複製乾淨連結";
+    await navigator.clipboard.writeText(value);
+    copyLabel.textContent = t("copied");
     button.classList.add("copied");
-    feedback.textContent = "已複製乾淨連結";
+    feedback.textContent = t("copied");
     feedbackTimer = setTimeout(() => {
       button.classList.remove("copied");
-      copyLabel.textContent = "複製乾淨連結";
+      copyLabel.textContent = t("copyClean");
       feedback.textContent = "";
     }, 2200);
   } catch {
-    copyLabel.textContent = "重新複製乾淨連結";
+    copyLabel.textContent = t("copyRetry");
     feedback.className = "error";
-    feedback.textContent = "複製失敗，請重試，或選取上方連結手動複製。";
+    feedback.textContent = t("copyFailed");
   } finally {
-    button.disabled = false;
+    button.disabled = !cleaned.value.trim();
   }
 });
 
@@ -52,29 +57,28 @@ async function initialize() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab?.url) throw new Error("Unavailable tab");
     const result = cleanUrl(tab.url);
-    showUrl(original, result.originalUrl);
-    showUrl(cleaned, result.cleanedUrl);
-    cleanedUrl = result.cleanedUrl;
+    showOriginal(result.originalUrl);
+    cleaned.value = result.cleanedUrl;
     if (result.signed) {
       status.classList.add("neutral");
       status.querySelector(".status-icon").textContent = "i";
-      statusText.textContent = "簽章連結保留原樣，避免連結失效";
+      statusText.textContent = t("signed");
     } else {
       const changed = result.cleanedUrl !== result.originalUrl;
       status.hidden = changed;
-      statusText.textContent = changed ? "" : "網址已經很乾淨";
+      statusText.textContent = changed ? "" : t("alreadyClean");
     }
     button.disabled = false;
   } catch {
-    original.textContent = "無法取得可清理的網頁網址";
-    cleaned.textContent = "—";
+    original.textContent = t("unsupportedTitle");
+    cleaned.value = "";
     document.getElementById("clean-section").hidden = true;
-    copyLabel.textContent = "此頁面不支援";
+    copyLabel.textContent = t("unsupportedButton");
     status.classList.add("error");
     status.querySelector(".status-icon").textContent = "!";
-    statusText.textContent = "此頁面無法讀取網址";
+    statusText.textContent = t("unsupportedStatus");
     feedback.className = "error";
-    feedback.textContent = "請切換至一般 HTTP 或 HTTPS 網頁後再開啟。";
+    feedback.textContent = t("unsupportedHint");
   }
 }
 

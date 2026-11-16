@@ -15,7 +15,7 @@ const profile = await mkdtemp(join(tmpdir(), "clean-url-test-"));
 const server = createServer((req, res) => { res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); res.end("<!doctype html><title>Clean URL local fixture</title><p>Local test page</p>"); });
 await new Promise(done => server.listen(0, "127.0.0.1", done));
 const base = `http://127.0.0.1:${server.address().port}`;
-const browser = spawn(browserPath, ["--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check", "--disable-background-networking", "--remote-debugging-port=0", `--user-data-dir=${profile}`, `--disable-extensions-except=${extensionRoot}`, `--load-extension=${extensionRoot}`, "about:blank"], { windowsHide: true, stdio: ["ignore", "ignore", "pipe"] });
+const browser = spawn(browserPath, ["--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check", "--disable-background-networking", "--remote-debugging-port=0", "--lang=zh-TW", `--user-data-dir=${profile}`, `--disable-extensions-except=${extensionRoot}`, `--load-extension=${extensionRoot}`, "about:blank"], { windowsHide: true, stdio: ["ignore", "ignore", "pipe"] });
 browser.on("error", error => console.error(error));
 const connections = [];
 let stderr = "";
@@ -80,7 +80,8 @@ try {
   await cdp("Page.navigate", { url: "chrome://extensions/" });
   await waitFor(() => evaluate("typeof chrome.developerPrivate !== 'undefined'"));
   let extension = await evaluate("new Promise(r => chrome.developerPrivate.getExtensionsInfo({includeDisabled:true}, r))");
-  extension = extension.find(e => e.name === "Clean URL｜乾淨連結");
+  // 名稱依瀏覽器語言而異，各語系皆以 Clean URL 開頭。
+  extension = extension.find(e => e.name.startsWith("Clean URL"));
   if (!extension) throw new Error("Extension did not load. Ensure icons exist and rerun; use Chromium supporting --load-extension.");
   assert.equal(extension.state, "ENABLED");
   console.log(`Loaded extension ${extension.id}`);
@@ -107,7 +108,7 @@ try {
   }
   await waitFor(() => inspect("document.querySelector('#status-text') && document.querySelector('#status-text').textContent !== '正在檢查網址…'"));
   assert.equal(await inspect("document.querySelector('#copy-button').disabled"), false);
-  const state = await inspect("({ original: document.querySelector('#original-url').textContent, cleaned: document.querySelector('#clean-url').textContent, status: document.querySelector('#status-text').textContent, width: document.body.offsetWidth })");
+  const state = await inspect("({ original: document.querySelector('#original-url').textContent, cleaned: document.querySelector('#clean-url').value, status: document.querySelector('#status-text').textContent, width: document.body.offsetWidth })");
   assert.equal(state.cleaned, `${base}/product/123?id=42#%E8%A6%8F%E6%A0%BC`);
   assert.equal(state.status, "");
   assert.equal(await inspect("document.querySelector('#clean-status').hidden"), true);
@@ -121,6 +122,12 @@ try {
   // Inspect actual clipboard content with an explicit testing-only CDP grant.
   await browserCdp("Browser.grantPermissions", { origin: `chrome-extension://${extension.id}`, permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"] });
   assert.equal(await inspect("navigator.clipboard.readText()"), state.cleaned);
+  // The clean link is editable; copying must use the edited value.
+  const edited = `${state.cleaned}&edited=1`;
+  await inspect(`(() => { const field = document.querySelector('#clean-url'); field.value = ${JSON.stringify(edited)}; field.dispatchEvent(new Event('input')); })()`);
+  await inspect("document.querySelector('#copy-button').click()");
+  await waitFor(async () => (await inspect("navigator.clipboard.readText()")) === edited);
+  await inspect(`(() => { const field = document.querySelector('#clean-url'); field.value = ${JSON.stringify(state.cleaned)}; field.dispatchEvent(new Event('input')); })()`);
   // Force a clipboard failure to verify the error message and retry path.
   await inspect("Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('test denial'); } } }); document.querySelector('#copy-button').click()");
   await waitFor(() => inspect("document.querySelector('#copy-feedback').classList.contains('error')"));
@@ -132,6 +139,7 @@ try {
     [`${base}/?utm_source=a&X-Amz-Signature=abc`, "簽章連結保留原樣，避免連結失效", false],
     ["chrome://settings/", "此頁面無法讀取網址", true],
   ];
+  // 狀態文字依瀏覽器語言顯示；測試以繁體中文比對時需使用 --lang=zh-TW。
   for (const [url, status, disabled] of scenarios) {
     await cdp("Page.navigate", { url });
     await waitFor(() => evaluate(`location.href === ${JSON.stringify(url)} && document.readyState === 'complete'`));
@@ -164,7 +172,7 @@ try {
     await waitFor(() => evaluate(`document.readyState === 'complete' && location.href === ${JSON.stringify(url)}`));
     await browserCdp("Extensions.triggerAction", { id: extension.id, targetId: tabTarget.targetId });
     await preview("Page.reload");
-    await waitFor(() => inspectPreview(`document.querySelector('#clean-url')?.textContent === ${JSON.stringify(expected)} && document.querySelector('#clean-status').hidden === ${url !== expected}`));
+    await waitFor(() => inspectPreview(`document.querySelector('#clean-url')?.value === ${JSON.stringify(expected)} && document.querySelector('#clean-status').hidden === ${url !== expected}`));
     await browserCdp("Target.activateTarget", { targetId: previewTab.targetId });
     await inspectPreview("document.querySelector('#copy-button').click()");
     await waitFor(() => inspectPreview("document.querySelector('#copy-feedback').textContent === '已複製乾淨連結'"));

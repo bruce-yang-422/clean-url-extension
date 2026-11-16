@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Clean URL"
+  },
+  "extDescription": {
+    "message": "알려진 추적 매개변수를 제거하고 깔끔한 링크를 로컬에서 복사합니다."
+  },
+  "actionTitle": {
+    "message": "Clean URL | 깔끔한 링크 복사"
+  }
+}

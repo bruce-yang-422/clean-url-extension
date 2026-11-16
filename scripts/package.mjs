@@ -12,8 +12,13 @@ const manifest = JSON.parse(await readFile(join(root, "manifest.json"), "utf8"))
 const metadata = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
 assert.equal(manifest.version, metadata.version, "Manifest/package versions must match");
 assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+// 語系檔依 _locales 目錄實際內容加入，並確認預設語系存在。
+const locales = (await readdir(join(root, "_locales"), { withFileTypes: true }))
+  .filter(entry => entry.isDirectory()).map(entry => `_locales/${entry.name}/messages.json`);
+assert.ok(locales.includes(`_locales/${manifest.default_locale}/messages.json`), "Default locale is missing");
 const files = [...new Set([
-  "manifest.json", manifest.action.default_popup, "popup.css", "popup.js", "url-cleaner.js",
+  "manifest.json", manifest.action.default_popup, "popup.css", "popup.js", "url-cleaner.js", "i18n.js",
+  manifest.background.service_worker, "offscreen.html", "offscreen.js", ...locales,
   ...Object.values(manifest.icons), ...Object.values(manifest.action.default_icon),
 ])].sort();
 

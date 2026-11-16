@@ -68,6 +68,7 @@ summary::-webkit-details-marker { display: none; }
 .notes summary span { color: #9eaaa0; }
 .notes[open] summary span { transform: rotate(45deg); }
 .notes > div { padding: 0 0 12px; color: #809084; font-size: 11px; line-height: 1.9; }
+.notes a { color: #12846e; text-decoration: underline; text-underline-offset: 3px; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0 30px; color: #919d94; font-size: 10px; }
 .site-footer > div { display: flex; gap: 22px; }
 .site-footer .text-button { color: inherit; font-size: inherit; }

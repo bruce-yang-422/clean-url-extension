@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Clean URL｜乾淨連結"
+  },
+  "extDescription": {
+    "message": "一鍵移除已知網址追蹤參數，在本機複製乾淨連結。"
+  },
+  "actionTitle": {
+    "message": "Clean URL｜複製乾淨連結"
+  }
+}

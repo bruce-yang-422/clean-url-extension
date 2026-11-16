@@ -19,13 +19,13 @@
     <article aria-labelledby="policy-title">
       <span class="eyebrow">PRIVACY POLICY</span>
       <h1 id="policy-title">Clean URL｜乾淨連結<br><span>隱私權政策</span></h1>
-      <p class="policy-date">最後更新日期：<time datetime="2026-10-19">2026 年 10 月 19 日</time></p>
+      <p class="policy-date">最後更新日期：<time datetime="2026-11-16">2026 年 11 月 16 日</time></p>
       <p>「Clean URL｜乾淨連結」（以下簡稱「本工具」）非常重視您的個人隱私。本隱私權政策適用於瀏覽器擴充功能、網頁版與 PWA，說明本工具如何處理您的資訊。</p>
 
       <section aria-labelledby="data-title">
         <h2 id="data-title">1. 資料收集與處理</h2>
         <p>本工具的網址清理功能為 100% 本地端（Local-only）運作。本工具不會收集、儲存、記錄、追蹤或傳輸您的個人身分資訊、瀏覽歷史紀錄、網路活動或輸入的網址，也不會讀取或上傳剪貼簿既有內容。</p>
-        <p>擴充功能僅在您主動開啟彈窗時讀取目前分頁的網址；網頁版與 PWA 僅處理您主動貼上或透過系統分享傳入的網址。原始網址與清理結果只存在當次介面的記憶體中，不寫入 localStorage、資料庫、清理歷史紀錄或離線快取。系統分享由本機 Service Worker 接收，不會將分享內容傳至網站伺服器。</p>
+        <p>擴充功能僅在您主動開啟彈窗時讀取目前分頁的網址，或在您點選右鍵選單時讀取該頁面或該連結的網址；網頁版與 PWA 僅處理您主動貼上或透過系統分享傳入的網址。原始網址與清理結果只存在當次介面的記憶體中，不寫入 localStorage、資料庫、清理歷史紀錄或離線快取。系統分享由本機 Service Worker 接收，不會將分享內容傳至網站伺服器。</p>
         <p>PWA 的離線快取僅包含應用程式、清理規則、圖示與本政策頁面，不包含您輸入的網址。您可透過瀏覽器清除此網站資料來移除離線快取。本工具不使用分析追蹤服務、追蹤 Cookie、外部字型或遠端清理 API。</p>
       </section>
 
@@ -33,7 +33,9 @@
         <h2 id="permissions-title">2. 權限使用說明</h2>
         <ul>
           <li><strong>activeTab：</strong>僅在您主動點擊擴充功能圖示開啟介面時，於本機端讀取當前分頁的 URL，用於辨識並過濾追蹤參數。</li>
-          <li><strong>clipboardWrite：</strong>僅在您點擊「複製乾淨連結」按鈕時，將過濾後的網址寫入您的本機剪貼簿。</li>
+          <li><strong>clipboardWrite：</strong>僅在您點擊「複製乾淨連結」按鈕或右鍵選單項目時，將過濾後的網址寫入您的本機剪貼簿。</li>
+          <li><strong>contextMenus：</strong>在右鍵選單加入「複製此頁的乾淨連結」與「複製連結的乾淨網址」。只有您點選這些項目時，才會讀取該頁面或該連結的網址。</li>
+          <li><strong>offscreen：</strong>右鍵選單由背景程式處理，而背景程式無法直接寫入剪貼簿，因此開啟一個不可見的擴充功能內部頁面，只用來把清理結果寫入剪貼簿，寫入後立即清空。</li>
         </ul>
         <p>網頁版與 PWA 不會讀取您正在瀏覽的其他分頁，只會在您按下複製按鈕時，透過瀏覽器的剪貼簿功能寫入清理結果。剪貼簿後續的保存或同步，依您的作業系統與剪貼簿設定運作。</p>
       </section>

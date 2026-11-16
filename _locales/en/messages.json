@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Clean URL"
+  },
+  "extDescription": {
+    "message": "Remove known tracking parameters from links and copy a clean URL, processed locally."
+  },
+  "actionTitle": {
+    "message": "Clean URL | Copy clean link"
+  }
+}

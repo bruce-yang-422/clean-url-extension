@@ -34,7 +34,7 @@ test("擴充通用歸因名稱，不擴大到功能參數", () => {
 });
 
 test("蝦皮專屬名稱不從其他網站移除", () => {
-  const input = "https://example.com/?sp_atk=a&xptdk=b&publish_id=c&uls_trackid=d";
+  const input = "https://example.com/?sp_atk=a&xptdk=b&publish_id=c&uls_trackid=d&incoming_source=dd";
   assert.equal(cleanUrl(input).cleanedUrl, input);
 });
 
